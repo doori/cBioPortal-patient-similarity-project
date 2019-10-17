@@ -6,7 +6,7 @@
 
 **Table of Contents**
 
-- [Coding Guidelines](#coding-guidelines)
+- Coding Guidelines
     + [Source Control](#source-control)
     + [Languages](#languages)
     + [Code](#code)
