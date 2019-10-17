@@ -70,7 +70,7 @@ https://www.cbioportal.org/
 ```
 https://www.cbioportal.org/
 ```
-[Team Project Folder](https://github.com/cBioPortal/cbioportal "Team Folder") 
+[Team Project Folder](https://drive.google.com/drive/folders/1Vdx99oZNMeFL_ZwkGf-kCJbeqxhlflYG?usp=sharing "Team Folder") 
 ```
 https://drive.google.com/drive/folders/1Vdx99oZNMeFL_ZwkGf-kCJbeqxhlflYG?usp=sharing
 ```
