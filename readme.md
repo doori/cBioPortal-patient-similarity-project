@@ -74,6 +74,9 @@ https://www.cbioportal.org/
 ```
 https://drive.google.com/drive/folders/1Vdx99oZNMeFL_ZwkGf-kCJbeqxhlflYG?usp=sharing
 ```
-    
+[Jira/Attlassian Dashboard](https://patientsimilarity.atlassian.net/ "Jira/Attlassian Dashboard")
+```
+https://patientsimilarity.atlassian.net/
+```
     
     
