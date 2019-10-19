@@ -19,7 +19,7 @@ public class SimilarityServiceImplTest {
 
     @Test
     public void jaccardIndex() throws IOException {
-        List<Patient> patients = similarityService.jaccardIndex("P-0000004-T01-IM3", 10);
+        List<Patient> patients = similarityService.jaccardIndex("P-0000004-T01-IM3", 5);
 
     }
 }
