@@ -17,7 +17,7 @@
 ------
 
 ### Source Control
-- Do **not** commit directly into **master**!
+- Do **not** commit directly into **master**! (See [Git Feature Branch Workflow](https://patientsimilarity.atlassian.net/ "Git Feature Branch Workflow"))
 - Branch your features, then
 - Create Pull Requests (PR) when merging into Master
 - Do not approve your own PR unless it's a break-the-glass issue
@@ -77,6 +77,11 @@ https://drive.google.com/drive/folders/1Vdx99oZNMeFL_ZwkGf-kCJbeqxhlflYG?usp=sha
 [Jira/Attlassian Dashboard](https://patientsimilarity.atlassian.net/ "Jira/Attlassian Dashboard")
 ```
 https://patientsimilarity.atlassian.net/
+```
+
+[Git Feature Branch Workflow](https://patientsimilarity.atlassian.net/ "Git Feature Branch Workflow")
+```
+https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
 ```
     
     
