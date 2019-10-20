@@ -1,9 +1,11 @@
 package edu.gatech.cse6242.cbioportal.service.impl;
 
 import edu.gatech.cse6242.cbioportal.model.Patient;
+import edu.gatech.cse6242.cbioportal.persistence.PatientRepository;
 import edu.gatech.cse6242.cbioportal.service.SimilarityService;
 import net.sf.javaml.distance.JaccardIndexSimilarity;
 import net.sf.javaml.tools.data.FileHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import net.sf.javaml.core.*;
 
@@ -21,6 +23,14 @@ Implementation of Similarity Metrics.
  */
 @Service
 public class SimilarityServiceImpl implements SimilarityService {
+
+    @Autowired
+    PatientRepository patientRepository;
+
+    @Override
+    public List<Patient> getPatientDetails(List<Long> ids) {
+        return patientRepository.findAllById(ids);
+    }
 
     @Override
     public List<Patient> jaccardIndex(String patientId, int limit) throws IOException {
@@ -52,4 +62,6 @@ public class SimilarityServiceImpl implements SimilarityService {
         }
         return null;
     }
+
+
 }
