@@ -1,8 +1,3 @@
-#Patient Identifier	Sample Identifier	Sample Collection Source	Specimen Preservation Type	Specimen Type	DNA Input	Sample coverage	Tumor Purity	Matched Status	Sample Type	Primary Tumor Site	Metastatic Site	Sample Class	Oncotree Code	Cancer Type	Cancer Type Detailed
-#Patient identifier	Sample Identifier	Sample Collection Source	The method used for preparing the tissue for examination and study.	The broad cancer phenotype and site information values for a sample to be processed.	DNA Input	Sample coverage	Tumor Purity	Matched Status	The type of sample (i.e., normal, primary, met, recurrence).	Text term to describe the organ sub-division in an individual with cancer.	The anatomic location to which the cancer has spread.	The sample classification (i.e., tumor, cellline, xenograph).	Oncotree Code	Cancer Type	Cancer Type Detailed
-#STRING	STRING	STRING	STRING	STRING	NUMBER	NUMBER	NUMBER	STRING	STRING	STRING	STRING	STRING	STRING	STRING	STRING
-#1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
-PATIENT_ID	SAMPLE_ID	SAMPLE_COLLECTION_SOURCE	SPECIMEN_PRESERVATION_TYPE	SPECIMEN_TYPE	DNA_INPUT	SAMPLE_COVERAGE	TUMOR_PURITY	MATCHED_STATUS	SAMPLE_TYPE	PRIMARY_SITE	METASTATIC_SITE	SAMPLE_CLASS	ONCOTREE_CODE	CANCER_TYPE	CANCER_TYPE_DETAILED
 P-0000004	P-0000004-T01-IM3	Outside	FFPE	Biopsy	250	428	50	Matched	Primary	Breast	Not Applicable	Tumor	IDC	Breast Cancer	Breast Invasive Ductal Carcinoma
 P-0000015	P-0000015-T01-IM3	In-House	FFPE	Biopsy	198	281	40	Matched	Metastasis	Breast	Liver	Tumor	IDC	Breast Cancer	Breast Invasive Ductal Carcinoma
 P-0000023	P-0000023-T01-IM3	In-House	FFPE	Biopsy	250	454	30	Matched	Primary	Peritoneum	Not Applicable	Tumor	PEMESO	Mesothelioma	Peritoneal Mesothelioma
