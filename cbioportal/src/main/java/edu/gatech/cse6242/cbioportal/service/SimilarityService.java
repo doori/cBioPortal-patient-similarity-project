@@ -10,8 +10,6 @@ Interface for Similarity Metrics Service
  */
 public interface SimilarityService {
 
-    public List<Patient> getPatientDetails(List<Long> ids);
-
     public List<Patient> jaccardIndex(String patientId, int limit) throws IOException;
 
 }

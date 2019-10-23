@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Arrays;
 
@@ -18,8 +20,20 @@ public class ApiController {
 
     @GetMapping("helloworld")
     public ResponseEntity<List<Patient>> getPatients() {
-        List<Patient> patients = similarityService.getPatientDetails(
-                Arrays.asList(0L, 1L, 2L));
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @GetMapping("similar-patients")
+    public ResponseEntity<List<Patient>> getSimilarPatients(
+            @RequestParam String patientId,
+            @RequestParam(defaultValue = "100") int limit,
+            @RequestParam(defaultValue = "jaccard") String similarity) throws IOException {
+
+        List<Patient> patients = null;
+        if ("jaccard".equalsIgnoreCase(similarity)) {
+            patients = similarityService.jaccardIndex(patientId, limit);
+        }
 
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }

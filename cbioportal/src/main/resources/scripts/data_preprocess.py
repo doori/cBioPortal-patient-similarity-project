@@ -1,4 +1,5 @@
 import pandas as pd
+import sys
 
 data_dir = "../../../../data/"
 
@@ -26,16 +27,23 @@ def patient_matrix(save_fname):
   grouped = merged.groupby("PATIENT_ID", as_index=False).sum()
   grouped = pd.merge(grouped,
                      dataSample[["PATIENT_ID", "CANCER_TYPE"]].drop_duplicates("PATIENT_ID"))
+
   # Re-arrange columns
   cols = grouped.columns.tolist()
   cols = cols[-1:] + cols[1:-1]
+  grouped[cols[1:]] = grouped[cols[1:]].astype('int16')
   grouped = grouped[cols]
   print(grouped)
 
   # Save merged dataframe into a CSV file in data_dir
-  grouped.to_csv(data_dir+save_fname, index=False)
-
+  grouped.to_csv(data_dir + save_fname, index=False, sep="\t")
 
 
 if __name__ == "__main__":
-  patient_matrix("msk_processed.csv")
+  filename = "msk_processed.tsv"
+
+  if len(sys.argv) > 1:
+    filename =  sys.argv[1]
+
+  patient_matrix(filename)
+

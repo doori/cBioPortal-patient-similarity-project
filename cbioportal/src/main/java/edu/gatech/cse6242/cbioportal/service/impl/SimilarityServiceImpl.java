@@ -3,18 +3,15 @@ package edu.gatech.cse6242.cbioportal.service.impl;
 import edu.gatech.cse6242.cbioportal.model.Patient;
 import edu.gatech.cse6242.cbioportal.persistence.PatientRepository;
 import edu.gatech.cse6242.cbioportal.service.SimilarityService;
-import net.sf.javaml.distance.JaccardIndexSimilarity;
+import net.sf.javaml.distance.DistanceMeasure;
 import net.sf.javaml.tools.data.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import net.sf.javaml.core.*;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -28,39 +25,40 @@ public class SimilarityServiceImpl implements SimilarityService {
     PatientRepository patientRepository;
 
     @Override
-    public List<Patient> getPatientDetails(List<Long> ids) {
-        return patientRepository.findAllById(ids);
+    public List<Patient> jaccardIndex(String patientId, int limit) throws IOException {
+        JaccardSimilarity jaccard = new JaccardSimilarity();
+        return getSimilarPatients(patientId, limit, jaccard);
     }
 
-    @Override
-    public List<Patient> jaccardIndex(String patientId, int limit) throws IOException {
+    private List<Patient> getSimilarPatients(String patientId, int limit, DistanceMeasure dm) throws IOException {
 
-        File file = new File("data/data_CNA.txt");
-        FileReader reader = new FileReader(file);
-        BufferedReader buffered = new BufferedReader(reader);
-        String header = buffered.readLine();
-        String[] samples = header.split("\\t");
-        List<String> sampleList = Arrays.asList(samples);
-        sampleList.remove("Hugo_Symbol");
-        sampleList.remove("Entrez_Gene_Id");
+        File file = new File("data/msk_processed.tsv");
+        Dataset cnaData = FileHandler.loadDataset(file, 0, "\t");
 
-        DefaultDataset cnaData = (DefaultDataset) FileHandler.loadDataset(file, 0, "\\t");
         // remove header
         cnaData.remove(0);
+        Patient patient = patientRepository.findByPatientId(patientId);
+        int id = patient.getId().intValue();
 
-        System.out.println(cnaData.instance(1));
-        System.out.println(cnaData.classValue(1));
-        System.out.println(cnaData.indexOf(patientId));
+        Instance inst = cnaData.instance(id);
+        // TODO extend kNearest to return Map of Instance, similarity double?
+        Set<Instance> similarPatients = cnaData.kNearest(limit, inst, dm);
 
-        Instance inst = cnaData.instance(1);
-        JaccardIndexSimilarity jaccardIndex = new JaccardIndexSimilarity();
-        Set<Instance> similarPatients = cnaData.kNearest(limit, inst, jaccardIndex);
+        return convertToPatientList(similarPatients, cnaData);
+    }
 
-        Iterator it = similarPatients.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
+    /*
+    Retrieves indices of instances from the dataset and queries patients based on the indices.
+     */
+    // TODO list of PatientDTO
+    private List<Patient> convertToPatientList(Set<Instance> instances, Dataset ds) {
+        List<Long> ids = new ArrayList<>();
+        for (Instance inst : instances) {
+            int idx = ds.indexOf(inst);
+            ids.add(Long.valueOf(idx));
         }
-        return null;
+
+        return patientRepository.findAllById(ids);
     }
 
 
