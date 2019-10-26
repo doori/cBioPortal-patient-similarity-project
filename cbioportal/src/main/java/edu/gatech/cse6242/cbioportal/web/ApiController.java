@@ -1,6 +1,7 @@
 package edu.gatech.cse6242.cbioportal.web;
 
 import edu.gatech.cse6242.cbioportal.model.Patient;
+import edu.gatech.cse6242.cbioportal.model.PatientDTO;
 import edu.gatech.cse6242.cbioportal.service.SimilarityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Arrays;
 
 @RequestMapping("api")
 @RestController
@@ -25,14 +25,14 @@ public class ApiController {
     }
 
     @GetMapping("similar-patients")
-    public ResponseEntity<List<Patient>> getSimilarPatients(
-            @RequestParam String patientId,
+    public ResponseEntity<List<PatientDTO>> getSimilarPatients(
+            @RequestParam String id,
             @RequestParam(defaultValue = "100") int limit,
             @RequestParam(defaultValue = "jaccard") String similarity) throws IOException {
 
-        List<Patient> patients = null;
+        List<PatientDTO> patients = null;
         if ("jaccard".equalsIgnoreCase(similarity)) {
-            patients = similarityService.jaccardIndex(patientId, limit);
+            patients = similarityService.jaccard(id, limit);
         }
 
         return new ResponseEntity<>(patients, HttpStatus.OK);

@@ -3,10 +3,14 @@ package edu.gatech.cse6242.cbioportal.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name="SAMPLE")
 public class Sample {
     @Id
     private Long id;
     private String patientId;
+    @ManyToOne
+    @JoinColumn(name="PATIENT_IDX", nullable=false)
+    private Patient patient;
     private String sampleId;
     private String sampleCollectionSource;
     private String specimenPreservationType;
@@ -38,6 +42,10 @@ public class Sample {
     public void setPatientId(String patientId) {
         this.patientId = patientId;
     }
+
+    public Patient getPatient() { return patient; }
+
+    public void setPatient(Patient patient) { this.patient = patient; }
 
     public String getSampleId() {
         return sampleId;

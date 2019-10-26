@@ -1,8 +1,13 @@
 package edu.gatech.cse6242.cbioportal.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
+@Table(name="PATIENT")
 public class Patient {
     @Id
     private Long id;
@@ -12,6 +17,9 @@ public class Patient {
     private String smokingHistory;
     private String osMonths;
     private String osStatus;
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="patient", cascade=CascadeType.ALL)
+    @NotNull
+    private List<Sample> samples = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -67,5 +75,13 @@ public class Patient {
 
     public void setOsStatus(String osStatus) {
         this.osStatus = osStatus;
+    }
+
+    public List<Sample> getSamples() {
+        return samples;
+    }
+
+    public void setSamples(List<Sample> samples) {
+        this.samples = samples;
     }
 }

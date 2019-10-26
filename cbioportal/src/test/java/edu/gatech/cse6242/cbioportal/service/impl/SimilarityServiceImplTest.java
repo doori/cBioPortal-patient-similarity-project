@@ -1,7 +1,6 @@
 package edu.gatech.cse6242.cbioportal.service.impl;
 
-import edu.gatech.cse6242.cbioportal.model.Patient;
-import edu.gatech.cse6242.cbioportal.model.Sample;
+import edu.gatech.cse6242.cbioportal.model.PatientDTO;
 import edu.gatech.cse6242.cbioportal.persistence.SampleRepository;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -25,21 +24,17 @@ public class SimilarityServiceImplTest {
     private SampleRepository sampleRepository;
 
     @Test
-    public void jaccardIndex() throws IOException {
-        // with exact match, 94 returned when queried for 100
-        // with any alterations, 141 returned when queried for 200
-        List<Patient> patients = similarityService.jaccardIndex("P-0000004", 200);
+    public void testJaccard() throws IOException {
+        // Jaccard may return less patients than the limit.
+        // with exact match (Ai == Bi), 94 returned when queried for 100
+        // with any alterations (Ai != 0) && (Bi != 0), 141 returned when queried for 200
+        int limit = 5;
+        List<PatientDTO> patients = similarityService.jaccard("P-0000273", limit);
 
-        List<String> patientIds = new ArrayList<>();
-        for (Patient p: patients) {
-            patientIds.add(p.getPatientId());
+        for (PatientDTO p: patients) {
+            System.out.println(p.getPatientId() + " " + p.getCancerType() + " " + p.getSimilarity());
         }
 
-        List<Sample> samples = sampleRepository.findAllByPatientId(patientIds);
-        for (Sample s: samples) {
-            System.out.println(s.getPatientId() + " " + s.getCancerType());
-        }
-
-        Assert.assertEquals(10, patients.size());
+        Assert.assertEquals(limit, patients.size());
     }
 }

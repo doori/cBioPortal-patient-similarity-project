@@ -8,7 +8,7 @@ Implementation of Jaccard Similarity where
 the numerator is the number of common genomic alterations (non-zero elements) in A and B
 and the denominator is the number of distinct alterations in A and B.
 
-          # (Ai == Bi) && (Ai != 0)
+          # (Ai != 0) && (Ai == Bi)
 JI(A,B) = -------------------------
           # (Ai != 0) || (Bi != 0)
 
@@ -26,7 +26,7 @@ public class JaccardSimilarity extends AbstractSimilarity {
             double bi = b.get(i);
             if (ai != 0.0) {
                 denom++;
-                if (bi != 0.0) {//(ai == bi) {
+                if (ai == bi) {
                     numer++;
                 }
             }

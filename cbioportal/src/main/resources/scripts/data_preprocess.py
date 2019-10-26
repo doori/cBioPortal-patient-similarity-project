@@ -9,8 +9,7 @@ and genomic alterations information from data_CNA.txt.
 """
 def patient_matrix(save_fname):
   # Copy-number alterations
-  dataCNA = pd.read_csv(data_dir + "data_CNA.txt", \
-    sep="\t", comment="#")
+  dataCNA = pd.read_csv(data_dir + "data_CNA.txt", sep="\t", comment="#")
 
   dataCNA = dataCNA.set_index("Hugo_Symbol").T
   dataCNA.reset_index(inplace=True)
