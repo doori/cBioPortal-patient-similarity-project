@@ -45,7 +45,7 @@ You will see something like the screenshot below. Clicking on say hello, makes a
 
 ## H2 Database
 
-For this Proof of Concept, we use an in-memory H2 Database. To access this database, go to http://localhost:8080/h2-console
+For this Proof of Concept, we use an in-memory H2 Database that is brought up when the application starts. To access this database, go to http://localhost:8080/h2-console
 and Connect with the default settings.
 
 ![h2db](readme_img/h2db.png)
