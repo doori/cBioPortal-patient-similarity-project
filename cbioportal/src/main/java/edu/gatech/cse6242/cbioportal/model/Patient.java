@@ -1,5 +1,7 @@
 package edu.gatech.cse6242.cbioportal.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ public class Patient {
     private String smokingHistory;
     private String osMonths;
     private String osStatus;
+    @JsonManagedReference
     @OneToMany(fetch=FetchType.EAGER, mappedBy="patient", cascade=CascadeType.ALL)
     @NotNull
     private List<Sample> samples = new ArrayList<>();

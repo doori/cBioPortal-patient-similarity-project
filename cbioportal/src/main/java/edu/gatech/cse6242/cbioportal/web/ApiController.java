@@ -37,4 +37,11 @@ public class ApiController {
 
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
+
+    @GetMapping("patient")
+    public ResponseEntity<Patient> getPatientDetails(
+            @RequestParam String id) {
+        Patient patient = similarityService.getPatientDetails(id);
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
 }

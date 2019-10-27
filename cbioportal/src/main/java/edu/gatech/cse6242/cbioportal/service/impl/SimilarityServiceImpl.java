@@ -36,6 +36,11 @@ public class SimilarityServiceImpl implements SimilarityService {
         return getSimilarPatients(patientId, limit, jaccard);
     }
 
+    @Override
+    public Patient getPatientDetails(String patientId) {
+        return patientRepository.findByPatientId(patientId);
+    }
+
     private List<PatientDTO> getSimilarPatients(String patientId, int limit, DistanceMeasure dm) throws IOException {
 
         File file = new File("data/msk_processed.tsv");
