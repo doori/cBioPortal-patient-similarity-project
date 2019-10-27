@@ -1,7 +1,9 @@
 package edu.gatech.cse6242.cbioportal.web;
 
+import edu.gatech.cse6242.cbioportal.model.CancerTypeDTO;
 import edu.gatech.cse6242.cbioportal.model.Patient;
 import edu.gatech.cse6242.cbioportal.model.PatientDTO;
+import edu.gatech.cse6242.cbioportal.service.CancerTypeService;
 import edu.gatech.cse6242.cbioportal.service.SimilarityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,9 @@ public class ApiController {
 
     @Autowired
     SimilarityService similarityService;
+
+    @Autowired
+    CancerTypeService cancerTypeService;
 
     @GetMapping("helloworld")
     public ResponseEntity<List<Patient>> getPatients() {
@@ -43,5 +48,17 @@ public class ApiController {
             @RequestParam String id) {
         Patient patient = similarityService.getPatientDetails(id);
         return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
+
+    @GetMapping("cancer-type-prediction")
+    public ResponseEntity<CancerTypeDTO> getCancerTypePrediction(
+            @RequestParam String id,
+            @RequestParam(defaultValue = "rf") String classifier) throws IOException {
+
+        CancerTypeDTO cancerTypeDTO = null;
+        if ("rf".equalsIgnoreCase(classifier)) {
+            cancerTypeDTO = cancerTypeService.predictCancerTypeRF(id);
+        }
+        return new ResponseEntity<>(cancerTypeDTO, HttpStatus.OK);
     }
 }

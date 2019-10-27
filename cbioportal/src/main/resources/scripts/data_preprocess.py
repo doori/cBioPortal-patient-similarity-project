@@ -20,6 +20,7 @@ def patient_matrix(save_fname):
   dataSample = pd.read_csv(data_dir + "data_clinical_sample.txt", \
     sep="\t", comment="#")
   dataSample = dataSample[["SAMPLE_ID", "PATIENT_ID", "CANCER_TYPE"]]
+  dataSample = dataSample.dropna(subset=['CANCER_TYPE'])
 
   # Merge and Group by Patient ID
   merged = pd.merge(dataCNA, dataSample, on="SAMPLE_ID")
