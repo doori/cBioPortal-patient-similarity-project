@@ -13,6 +13,16 @@ CSE6242 cBioPortal Patient Similarity Prototype by Team 15
 
 You have can build and run the application through the command line or your IDE.
 
+Before build, please run below to install the 3rd party jars.
+```
+mvn install:install-file -Dfile=<path-to-cbioportal-folder>/dependency/javaml-0.1.7.jar -DgroupId=net.sourceforge \
+       -DartifactId=javaml -Dversion=0.1.7 -Dpackaging=jar
+```
+```
+mvn install:install-file -Dfile=<path-to-cbioportal-folder>/dependency/ajt-2.9.jar -DgroupId=be.abeel \
+       -DartifactId=javaml -Dversion=2.9 -Dpackaging=jar
+```
+
 **1. via Command line**  
 In cbioportal/ directory run below commands.  
 If you're using Mac or Linux in cbioportal/ directory run  
@@ -46,7 +56,7 @@ You will see something like the screenshot below. Clicking on say hello, makes a
 ## H2 Database
 
 For this Proof of Concept, we use an in-memory H2 Database that is brought up when the application starts. To access this database, go to http://localhost:8080/h2-console
-and Connect with the default settings.
+and connect with the default settings.
 
 ![h2db](readme_img/h2db.png)
 
