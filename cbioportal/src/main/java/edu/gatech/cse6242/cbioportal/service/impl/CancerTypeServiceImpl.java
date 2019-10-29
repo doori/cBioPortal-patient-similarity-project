@@ -7,10 +7,12 @@ import edu.gatech.cse6242.cbioportal.service.CancerTypeService;
 import edu.gatech.cse6242.cbioportal.util.CustomDataset;
 import edu.gatech.cse6242.cbioportal.util.DatasetUtil;
 import net.sf.javaml.classification.Classifier;
-import net.sf.javaml.classification.tree.RandomForest;
 import net.sf.javaml.core.Instance;
+import net.sf.javaml.tools.weka.WekaClassifier;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import weka.classifiers.trees.RandomForest;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,8 +26,9 @@ public class CancerTypeServiceImpl implements CancerTypeService {
     @Override
     public CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException {
         // TODO hyper-parameter tuning
-        RandomForest rf = new RandomForest(10, false, 100, new Random());
-        return predictCancerType(patientId, rf);
+        RandomForest rf = new RandomForest();
+        Classifier rfc = new WekaClassifier(rf);
+        return predictCancerType(patientId, rfc);
     }
 
     private CancerTypeDTO predictCancerType(String patientId, Classifier cls) throws IOException {
