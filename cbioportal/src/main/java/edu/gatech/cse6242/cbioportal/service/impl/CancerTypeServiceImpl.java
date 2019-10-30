@@ -25,8 +25,13 @@ public class CancerTypeServiceImpl implements CancerTypeService {
 
     @Override
     public CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException {
-        // TODO hyper-parameter tuning
+
         RandomForest rf = new RandomForest();
+        rf.setMaxDepth(100);
+        rf.setNumTrees(50);
+        System.out.println("Max Depth: " + rf.getMaxDepth() +
+                " Num Features: " + rf.getNumFeatures() +
+                " Num Trees: " + rf.getNumTrees());
         Classifier rfc = new WekaClassifier(rf);
         return predictCancerType(patientId, rfc);
     }
@@ -44,15 +49,28 @@ public class CancerTypeServiceImpl implements CancerTypeService {
         String prediction = cls.classify(inst).toString();
         System.out.println(prediction);
 
-        Map<Object, Double> classDistribution = cls.classDistribution(inst);
-
         // Keep classes with distribution > 0.0
+        Map<Object, Double> classDistribution = cls.classDistribution(inst);
         Map<Object, Double> nonZeroClasses = new HashMap<>();
         for (Object obj : classDistribution.keySet()) {
             if (classDistribution.get(obj).compareTo(0.0) > 0) {
                 nonZeroClasses.put(obj, classDistribution.get(obj));
             }
         }
+
+        // Test
+        int correct = 0, wrong = 0;
+        /* Classify all instances and check with the correct class values */
+        for (Instance ex : cnaData) {
+            Object predictedClassValue = cls.classify(ex);
+            Object realClassValue = inst.classValue();
+            if (predictedClassValue.equals(realClassValue))
+                correct++;
+            else
+                wrong++;
+        }
+        System.out.println("Correct predictions  " + correct);
+        System.out.println("Wrong predictions " + wrong);
 
         CancerTypeDTO dto = new CancerTypeDTO();
         dto.setPatientId(patientId);
