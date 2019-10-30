@@ -1,22 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Patient Similarity</title>
+    <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="api.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!--Required js libraries-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
 
 </head>
+
 <body>
-    <div class="container-fluid p-3">
-        <div class="p-3">
-            <h1>Patient: A</h1>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid top-container-nav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a id="cbioportal-logo" href="/"><img
+                        src="https://frontend.cbioportal.org/reactapp/images/369b022222badf37b2b0c284f4ae2284.png"
+                        alt="cBioPortal Logo" class="cbioportal-logo"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 patient-similarity-node-graph panel panel-default"
+                id="patient-similarity-node-graph">
+            </div>
+            <div class="col-lg-4 col-md-4 patient-similarity-node-graph">
+                <div class="panel panel-default patient-similarity-distribution-graph-1">
+                    <div class="panel-heading">
+                        Support Graph A
+                    </div>
+                </div>
+
+                <div class="panel panel-default patient-similarity-distribution-graph-2">
+                    <div class="panel-heading">
+                        Support Settings / Support Graph B
+                    </div>
+                    <div class="panel-content">
+                        <div>
+                            <button type="button" class="btn btn-toggle active" data-toggle="button"
+                                aria-pressed="false" autocomplete="off">
+                                <div class="handle"></div>
+                            </button>
+                            <div class="btn-toogle-label">Super option A</div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false"
+                                autocomplete="off">
+                                <div class="handle"></div>
+                            </button>
+                            <div class="btn-toogle-label">Super option B</div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-toggle active" data-toggle="button"
+                                aria-pressed="false" autocomplete="off">
+                                <div class="handle"></div>
+                            </button>
+                            <div class="btn-toogle-label">Super option C</div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false"
+                                autocomplete="off">
+                                <div class="handle"></div>
+                            </button>
+                            <div class="btn-toogle-label">Super option E</div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-toggle active" data-toggle="button"
+                                aria-pressed="false" autocomplete="off">
+                                <div class="handle"></div>
+                            </button>
+                            <div class="btn-toogle-label">Super option F</div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-toggle active" data-toggle="button"
+                                aria-pressed="false" autocomplete="off">
+                                <div class="handle"></div>
+                            </button>
+                            <div class="btn-toogle-label">Super option G</div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false"
+                                autocomplete="off">
+                                <div class="handle"></div>
+                            </button>
+                            <div class="btn-toogle-label">Super option H</div>
+                        </div>
+                    </div>
+                </div><!-- /.patient-similarity-distribution-graph-2 -->
+            </div>
         </div>
-        <div class="p-3">
-            <div class="col-sm-2" id="helloworld"></div>
-            <button type="submit" class="btn btn-info" onclick="helloworld()">say hello</button>
+
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Some Cool optional title
+                </div>
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Id</th>
+                                    <th scope="col">Similarity</th>
+                                    <th scope="col">Cancer Type</th>
+                                    <th scope="col">Sex</th>
+                                    <th scope="col">Vital Status</th>
+                                    <th scope="col">Smoking History</th>
+                                    <th scope="col">OS Months</th>
+                                    <th scope="col">OS Status</th>
+                                    <th scope="col">Sample Collection Source</th>
+                                    <th scope="col">Specimen Preservation Type</th>
+                                    <th scope="col">Specimen Type</th>
+                                    <th scope="col">Dna Input</th>
+                                    <th scope="col">Sample Coverage</th>
+                                    <th scope="col">Tumor Purity</th>
+                                    <th scope="col">Matched Status</th>
+                                    <th scope="col">Sample Type</th>
+                                    <th scope="col">Primary Site</th>
+                                    <th scope="col">Metastatic Site</th>
+                                    <th scope="col">Sample Class</th>
+                                    <th scope="col">Oncotree Code</th>
+                                    <th scope="col">Cancer Type Detailed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <!-- <th scope="row"></th> -->
+                                    <td>P-0000110</td>
+                                    <td>0.333</td>
+                                    <td>Non-Small Cell Lung Cancer</td>
+                                    <td>Male</td>
+                                    <td>ALIVE</td>
+                                    <td>Prev/Curr Smoker</td>
+                                    <td>33.50</td>
+                                    <td>LIVING</td>
+                                    <td>In-House</td>
+                                    <td>FFPE</td>
+                                    <td>Resection</td>
+                                    <td>250</td>
+                                    <td>866</td>
+                                    <td>50</td>
+                                    <td>Matched</td>
+                                    <td>Primary</td>
+                                    <td>Lung</td>
+                                    <td>Not Applicable</td>
+                                    <td>Tumor</td>
+                                    <td>LUAD</td>
+                                    <td>Lung Adenocarcinoma</td>
+                                </tr>
+                                <tr>
+                                    <!-- <th scope="row"></th> -->
+                                    <td>P-0004706</td>
+                                    <td>0.3076923076923077</td>
+                                    <td>Melanoma</td>
+                                    <td>Male</td>
+                                    <td>ALIVE</td>
+                                    <td>Never</td>
+                                    <td>14.46</td>
+                                    <td>LIVING</td>
+                                    <td>Outside</td>
+                                    <td>DNA</td>
+                                    <td>Resection</td>
+                                    <td>250</td>
+                                    <td>577</td>
+                                    <td>60</td>
+                                    <td>Matched</td>
+                                    <td>Metastasis</td>
+                                    <td>Eye</td>
+                                    <td>Colon</td>
+                                    <td>Tumor</td>
+                                    <td>UM</td>
+                                    <td>Uveal Melanoma</td>
+                                </tr>
+                                <tr>
+                                    <!-- <th scope="row"></th> -->
+                                    <td>P-0005453</td>
+                                    <td>0.4</td>
+                                    <td>Gastrointestinal Stromal Tumor</td>
+                                    <td>Male</td>
+                                    <td>ALIVE</td>
+                                    <td>Unknown</td>
+                                    <td>14.92</td>
+                                    <td>LIVING</td>
+                                    <td>In-House</td>
+                                    <td>DNA</td>
+                                    <td>Resection</td>
+                                    <td>250</td>
+                                    <td>868</td>
+                                    <td>80</td>
+                                    <td>Matched</td>
+                                    <td>Primary</td>
+                                    <td>Small Bowel</td>
+                                    <td>Not Applicable</td>
+                                    <td>Tumor</td>
+                                    <td>GIST</td>
+                                    <td>Gastrointestinal Stromal Tumor</td>
+                                </tr>
+                                <tr>
+                                    <!-- <th scope="row"></th> -->
+                                    <td>P-0007071</td>
+                                    <td>0.3</td>
+                                    <td>Hepatobiliary Cancer</td>
+                                    <td>Female</td>
+                                    <td>ALIVE</td>
+                                    <td>Never</td>
+                                    <td>7.69</td>
+                                    <td>LIVING</td>
+                                    <td>In-House</td>
+                                    <td>FFPE</td>
+                                    <td>Resection</td>
+                                    <td>250</td>
+                                    <td>799</td>
+                                    <td>20</td>
+                                    <td>Matched</td>
+                                    <td>Primary</td>
+                                    <td>Gallbladder</td>
+                                    <td>Not Applicable</td>
+                                    <td>Tumor</td>
+                                    <td>GBC</td>
+                                    <td>Gallbladder Cancer</td>
+                                </tr>
+                                <tr>
+                                    <!-- <th scope="row"></th> -->
+                                    <td>P-0008312</td>
+                                    <td>0.3076923076923077</td>
+                                    <td>Soft Tissue Sarcoma</td>
+                                    <td>Female</td>
+                                    <td>DECEASED</td>
+                                    <td>Never</td>
+                                    <td>NA</td>
+                                    <td>DECEASED</td>
+                                    <td>Outside</td>
+                                    <td>FFPE</td>
+                                    <td>Resection</td>
+                                    <td>250</td>
+                                    <td>819</td>
+                                    <td>80</td>
+                                    <td>Matched</td>
+                                    <td>Primary</td>
+                                    <td>Knee</td>
+                                    <td>Not Applicable</td>
+                                    <td>Tumor</td>
+                                    <td>MFH</td>
+                                    <td>Undifferentiated Pleomorphic Sarcoma/Malignant Fibrous Histiocytoma/High-Grade
+                                        Spindle Cell Sarcoma</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /.table-responsive -->
+                </div>
+            </div><!-- /.panel panel-default -->
         </div>
-    </div>
+
+
+    </div><!-- /.container-fluid -->
+
+
+
+
 </body>
+<!--Support styles and scripts-->
+<link rel="stylesheet" href="d3-content/nodes/style.css">
+<script src="d3-content/nodes/node-graph.js"></script>
+
 </html>
