@@ -21,7 +21,7 @@ public class CancerTypeServiceImplTest {
     private CancerTypeService cancerTypeService;
 
     @Test
-    public void predictCancerType() throws IOException {
+    public void predictCancerTypeRF() throws IOException {
         CancerTypeDTO dto = cancerTypeService.predictCancerTypeRF("P-0000004");
 
         Assert.assertTrue(!dto.getCancerType().isEmpty());
@@ -78,5 +78,21 @@ public class CancerTypeServiceImplTest {
 
     Head and Neck Cancer: 0.21607369945917912
     Breast Cancer: 0.09761646633382923
+     */
+
+    @Test
+    public void predictCancerTypeMLP() throws Exception {
+        CancerTypeDTO dto = cancerTypeService.predictCancerTypeMLP("P-0000004");
+
+        Assert.assertTrue(!dto.getCancerType().isEmpty());
+    }
+    /*
+    ~ 4min
+    Hidden Layers: a Decay: true Learning Rate: 0.3 Training Time: 10
+    Correct predictions  896
+    Wrong predictions 9439
+
+    Non-Small Cell Lung Cancer: 0.18166094732291788
+    Breast Cancer: 0.02955296668122561
      */
 }

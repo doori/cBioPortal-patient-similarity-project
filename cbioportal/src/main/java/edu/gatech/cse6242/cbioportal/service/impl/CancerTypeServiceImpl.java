@@ -4,6 +4,7 @@ import edu.gatech.cse6242.cbioportal.model.CancerTypeDTO;
 import edu.gatech.cse6242.cbioportal.model.Patient;
 import edu.gatech.cse6242.cbioportal.persistence.PatientRepository;
 import edu.gatech.cse6242.cbioportal.service.CancerTypeService;
+import edu.gatech.cse6242.cbioportal.service.ClassificationService;
 import edu.gatech.cse6242.cbioportal.util.CustomDataset;
 import edu.gatech.cse6242.cbioportal.util.DatasetUtil;
 import net.sf.javaml.classification.Classifier;
@@ -22,18 +23,27 @@ public class CancerTypeServiceImpl implements CancerTypeService {
     PatientRepository patientRepository;
 
     @Autowired
-    TrainedModel trainedModel;
+    ClassificationService classificationService;
 
     @Override
     public CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException {
-        Classifier cls = trainedModel.getTrainedRandomForest();
-        return predictCancerType(patientId, cls);
-    }
-
-    private CancerTypeDTO predictCancerType(String patientId, Classifier cls) throws IOException {
         // load data
         CustomDataset cnaData = DatasetUtil.loadCnaData();
 
+        Classifier cls = classificationService.getTrainedRandomForest(cnaData);
+        return predictCancerType(patientId, cls, cnaData);
+    }
+
+    @Override
+    public CancerTypeDTO predictCancerTypeMLP(String patientId) throws Exception {
+        // load data
+        CustomDataset cnaData = DatasetUtil.loadCnaData();
+
+        Classifier cls = classificationService.getTrainedMultiLayerPerceptron(cnaData);
+        return predictCancerType(patientId, cls, cnaData);
+    }
+
+    private CancerTypeDTO predictCancerType(String patientId, Classifier cls, CustomDataset cnaData) throws IOException {
         // classify
         Patient patient = patientRepository.findByPatientId(patientId);
         Instance inst = cnaData.get(patient.getId().intValue());
@@ -54,7 +64,7 @@ public class CancerTypeServiceImpl implements CancerTypeService {
         for (Instance ex : cnaData) {
             Object predictedClassValue = cls.classify(ex);
             Object realClassValue = inst.classValue();
-            if (predictedClassValue.equals(realClassValue))
+            if (realClassValue.equals(predictedClassValue))
                 correct++;
             else
                 wrong++;
