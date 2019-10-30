@@ -8,11 +8,9 @@ import edu.gatech.cse6242.cbioportal.util.CustomDataset;
 import edu.gatech.cse6242.cbioportal.util.DatasetUtil;
 import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.core.Instance;
-import net.sf.javaml.tools.weka.WekaClassifier;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import weka.classifiers.trees.RandomForest;
 
 import java.io.IOException;
 import java.util.*;
@@ -23,25 +21,18 @@ public class CancerTypeServiceImpl implements CancerTypeService {
     @Autowired
     PatientRepository patientRepository;
 
+    @Autowired
+    TrainedModel trainedModel;
+
     @Override
     public CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException {
-
-        RandomForest rf = new RandomForest();
-        rf.setMaxDepth(100);
-        rf.setNumTrees(50);
-        System.out.println("Max Depth: " + rf.getMaxDepth() +
-                " Num Features: " + rf.getNumFeatures() +
-                " Num Trees: " + rf.getNumTrees());
-        Classifier rfc = new WekaClassifier(rf);
-        return predictCancerType(patientId, rfc);
+        Classifier cls = trainedModel.getTrainedRandomForest();
+        return predictCancerType(patientId, cls);
     }
 
     private CancerTypeDTO predictCancerType(String patientId, Classifier cls) throws IOException {
         // load data
         CustomDataset cnaData = DatasetUtil.loadCnaData();
-
-        // train
-        cls.buildClassifier(cnaData);
 
         // classify
         Patient patient = patientRepository.findByPatientId(patientId);
@@ -60,7 +51,6 @@ public class CancerTypeServiceImpl implements CancerTypeService {
 
         // Test
         int correct = 0, wrong = 0;
-        /* Classify all instances and check with the correct class values */
         for (Instance ex : cnaData) {
             Object predictedClassValue = cls.classify(ex);
             Object realClassValue = inst.classValue();
