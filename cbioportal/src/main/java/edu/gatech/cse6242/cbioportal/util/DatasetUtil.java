@@ -16,4 +16,13 @@ public class DatasetUtil {
         dataset.remove(0);
         return dataset;
     }
+
+    public static CustomDataset loadCnaDataWithoutUnknownTypes() throws IOException {
+        File file = new File("data/msk_without_unknown_types.tsv");
+        Dataset data = FileHandler.loadDataset(file, 0, "\t");
+        CustomDataset dataset = new CustomDataset(data);
+        // remove header
+        dataset.remove(0);
+        return dataset;
+    }
 }
