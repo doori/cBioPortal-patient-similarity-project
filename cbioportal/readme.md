@@ -60,4 +60,31 @@ and connect with the default settings.
 
 ![h2db](readme_img/h2db.png)
 
+## Data preprocessing
+
+Change directory to `src/main/resources/scripts` folder.
+To run data preprocessing scripts, first install required python libraries by running:
+```
+pip install -r requirements.txt
+```
+
+Then run the script, that will output a file in `data/` folder.
+Please check parameter details with `python data_preprocessing.py -h`
+```
+python data_preprocessing.py
+```
+
+## Experiment graphs
+
+Change directory to `src/main/resources/scripts` folder.
+To generate expeirment graphs, first install required python libraries by running:
+```
+pip install -r requirements.txt
+```
+
+Then run the script, that will save a png file in the current folder.
+An example command is as below. Please check the python file for more options.
+```
+python experiment_graphs.py knn
+```
 
