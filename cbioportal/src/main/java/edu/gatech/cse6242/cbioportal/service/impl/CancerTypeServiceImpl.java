@@ -28,18 +28,18 @@ public class CancerTypeServiceImpl implements CancerTypeService {
     @Override
     public CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException {
         // load data
-        CustomDataset cnaData = DatasetUtil.loadCnaData();
+        CustomDataset cnaData = DatasetUtil.loadCnaDataWithoutZeros();
 
         Classifier cls = classificationService.getTrainedRandomForest(cnaData);
         return predictCancerType(patientId, cls, cnaData);
     }
 
     @Override
-    public CancerTypeDTO predictCancerTypeMLP(String patientId) throws Exception {
+    public CancerTypeDTO predictCancerTypeKNN(String patientId) throws Exception {
         // load data
         CustomDataset cnaData = DatasetUtil.loadCnaData();
 
-        Classifier cls = classificationService.getTrainedMultiLayerPerceptron(cnaData);
+        Classifier cls = classificationService.getTrainedKNearestNeighbors(cnaData);
         return predictCancerType(patientId, cls, cnaData);
     }
 
@@ -59,11 +59,14 @@ public class CancerTypeServiceImpl implements CancerTypeService {
             }
         }
 
-        // Test
+        // Test - classify all instances and print results - for experiment only
         int correct = 0, wrong = 0;
+        List<String> yPred = new ArrayList<>(), yTrue = new ArrayList<>();
         for (Instance ex : cnaData) {
             Object predictedClassValue = cls.classify(ex);
-            Object realClassValue = inst.classValue();
+            Object realClassValue = ex.classValue();
+            yPred.add(predictedClassValue.toString());
+            yTrue.add(realClassValue.toString());
             if (realClassValue.equals(predictedClassValue))
                 correct++;
             else
@@ -71,6 +74,23 @@ public class CancerTypeServiceImpl implements CancerTypeService {
         }
         System.out.println("Correct predictions  " + correct);
         System.out.println("Wrong predictions " + wrong);
+
+        // Print Prediction and Actual for Confusion Matrix
+        StringBuilder sb = new StringBuilder("yPred = [");
+        for (String v : yPred) {
+            sb.append("'" + v + "', ");
+        }
+        int lastComma = sb.lastIndexOf(",");
+        sb.replace(lastComma, lastComma+2 , "]");
+        System.out.println(sb.toString());
+
+        StringBuilder sbt = new StringBuilder("yTrue = [");
+        for (String v : yTrue) {
+            sbt.append("'" + v + "', ");
+        }
+        lastComma = sbt.lastIndexOf(",");
+        sbt.replace(lastComma, lastComma+2 , "]");
+        System.out.println(sbt.toString());
 
         CancerTypeDTO dto = new CancerTypeDTO();
         dto.setPatientId(patientId);

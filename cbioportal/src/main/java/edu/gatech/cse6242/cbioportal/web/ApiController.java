@@ -59,8 +59,8 @@ public class ApiController {
         if ("rf".equalsIgnoreCase(classifier)) {
             cancerTypeDTO = cancerTypeService.predictCancerTypeRF(id);
         }
-        if ("mlp".equalsIgnoreCase(classifier)) {
-            cancerTypeDTO = cancerTypeService.predictCancerTypeMLP(id);
+        if ("knn".equalsIgnoreCase(classifier)) {
+            cancerTypeDTO = cancerTypeService.predictCancerTypeKNN(id);
         }
         return new ResponseEntity<>(cancerTypeDTO, HttpStatus.OK);
     }

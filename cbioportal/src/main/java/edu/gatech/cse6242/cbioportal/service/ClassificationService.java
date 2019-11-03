@@ -7,6 +7,6 @@ public interface ClassificationService {
 
     public Classifier getTrainedRandomForest(CustomDataset dataset);
 
-    public Classifier getTrainedMultiLayerPerceptron(CustomDataset dataset) throws Exception;
+    public Classifier getTrainedKNearestNeighbors(CustomDataset dataset) throws Exception;
 
 }

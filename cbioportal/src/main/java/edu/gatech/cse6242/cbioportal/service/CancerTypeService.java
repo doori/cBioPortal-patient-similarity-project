@@ -8,5 +8,5 @@ public interface CancerTypeService {
 
     CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException;
 
-    CancerTypeDTO predictCancerTypeMLP(String patientId) throws Exception;
+    CancerTypeDTO predictCancerTypeKNN(String patientId) throws Exception;
 }
