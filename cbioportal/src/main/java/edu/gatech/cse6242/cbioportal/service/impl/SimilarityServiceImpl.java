@@ -9,12 +9,10 @@ import edu.gatech.cse6242.cbioportal.service.SimilarityService;
 import edu.gatech.cse6242.cbioportal.util.CustomDataset;
 import edu.gatech.cse6242.cbioportal.util.DatasetUtil;
 import net.sf.javaml.distance.DistanceMeasure;
-import net.sf.javaml.tools.data.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import net.sf.javaml.core.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;

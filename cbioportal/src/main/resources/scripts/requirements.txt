@@ -1,5 +1,6 @@
 ## To install, run:  pip install -r requirements.txt
 ## Prerequisites: pip
 
-# pandas
 pandas
+matplotlib
+numpy
