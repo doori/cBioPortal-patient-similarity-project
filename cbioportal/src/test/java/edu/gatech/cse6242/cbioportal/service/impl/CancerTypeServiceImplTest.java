@@ -28,66 +28,17 @@ public class CancerTypeServiceImplTest {
     }
 
     /*
-    ~3min ##Default HP
-    Max Depth: 0 Num Features: 0 Num Trees: 10
-    Head and Neck Cancer
-    Correct predictions  923
-    Wrong predictions 9412
-
-    ~6min
-    Max Depth: 0 Num Features: 0 Num Trees: 50
-    Head and Neck Cancer
-    Correct predictions  923
-    Wrong predictions 9412
-
-    Head and Neck Cancer: 0.4803063702596676
-    Breast Cancer: 0.4215355875210164
-
-    ~6s
-    Max Depth: 10 Num Features: 0 Num Trees: 10
-    Non-Small Cell Lung Cancer
-    Correct predictions  1009
-    Wrong predictions 9326
-
-    Non-Small Cell Lung Cancer: 0.17022478347541695
-    Breast Cancer: 0.08682329655602736
-
-    ~30s
-    Max Depth: 10 Num Features: 0 Num Trees: 50
-    Non-Small Cell Lung Cancer
-    Correct predictions  1028
-    Wrong predictions 9307
-
-    Non-Small Cell Lung Cancer: 0.15577614107765597
-    Breast Cancer: 0.09896664262683103
-
-    ~1.5min
-    Max Depth: 50 Num Features: 0 Num Trees: 50
-    Non-Small Cell Lung Cancer
-    Correct predictions  893
-    Wrong predictions 9442
-
-    Non-Small Cell Lung Cancer: 0.13843426904297731
-    Breast Cancer: 0.09984765766073261
-
-    ~2min
-    Max Depth: 100 Num Features: 0 Num Trees: 50
-    Head and Neck Cancer
-    Correct predictions  892
-    Wrong predictions 9443
-
-    Head and Neck Cancer: 0.21607369945917912
-    Breast Cancer: 0.09761646633382923
-
-    **Max Depth: 100 Num Features: 0 Num Trees: 10
+    Max Depth: 100 Num Features: 0 Num Trees: 10
 w/o Unknown
     Correct predictions  4659
     Wrong predictions 5496
 w/o All zeros
     Correct predictions  3704
     Wrong predictions 1083
-
-
+Top 15 cancers (for pred & true labels)
+    Breast Cancer
+    Correct predictions  2658
+    Wrong predictions 475
      */
 
     @Test
@@ -102,6 +53,10 @@ w/o All zeros
 w/o All zeros
     Correct predictions  1672
     Wrong predictions 3115
+Top 15 cancers (for pred & true labels)
+    Non-Small Cell Lung Cancer
+    Correct predictions  1481
+    Wrong predictions 1403
 
      */
 }

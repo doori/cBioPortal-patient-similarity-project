@@ -37,7 +37,7 @@ public class CancerTypeServiceImpl implements CancerTypeService {
     @Override
     public CancerTypeDTO predictCancerTypeKNN(String patientId) throws Exception {
         // load data
-        CustomDataset cnaData = DatasetUtil.loadCnaData();
+        CustomDataset cnaData = DatasetUtil.loadCnaDataWithoutZeros();
 
         Classifier cls = classificationService.getTrainedKNearestNeighbors(cnaData);
         return predictCancerType(patientId, cls, cnaData);
@@ -61,16 +61,24 @@ public class CancerTypeServiceImpl implements CancerTypeService {
 
         // Test - classify all instances and print results - for experiment only
         int correct = 0, wrong = 0;
+        Set<String> top15 = new HashSet<String>(
+                Arrays.asList("Breast Cancer", "Non-Small Cell Lung Cancer", "Colorectal Cancer", "Prostrate Cancer",
+                        "Glioma", "Esphagogastric Cancer", "Soft Tissue Sarcoma", "Hepatobilary Cancer",
+                        "Germ Cell Tumor", "Ovarian Cancer", "Thyroid Cancer", "Bladder Cancer",
+                        "Endometrial Cancer", "Melanoma", "Cancer of Unknown Primary"));
         List<String> yPred = new ArrayList<>(), yTrue = new ArrayList<>();
         for (Instance ex : cnaData) {
+
             Object predictedClassValue = cls.classify(ex);
             Object realClassValue = ex.classValue();
-            yPred.add(predictedClassValue.toString());
-            yTrue.add(realClassValue.toString());
-            if (realClassValue.equals(predictedClassValue))
-                correct++;
-            else
-                wrong++;
+            if (top15.contains(realClassValue) && top15.contains(predictedClassValue)) {
+                yPred.add(predictedClassValue.toString());
+                yTrue.add(realClassValue.toString());
+                if (realClassValue.equals(predictedClassValue))
+                    correct++;
+                else
+                    wrong++;
+            }
         }
         System.out.println("Correct predictions  " + correct);
         System.out.println("Wrong predictions " + wrong);

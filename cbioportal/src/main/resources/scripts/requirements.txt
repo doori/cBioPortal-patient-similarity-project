@@ -2,6 +2,6 @@
 ## Prerequisites: pip
 
 pandas
-matplotlib
+matplotlib==3.1.0
 numpy
 sklearn

@@ -6,8 +6,6 @@ import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.classification.KNearestNeighbors;
 import net.sf.javaml.classification.evaluation.EvaluateDataset;
 import net.sf.javaml.classification.evaluation.PerformanceMeasure;
-import net.sf.javaml.distance.CosineSimilarity;
-import net.sf.javaml.distance.PearsonCorrelationCoefficient;
 import net.sf.javaml.tools.weka.WekaClassifier;
 import net.sf.javaml.utils.MathUtils;
 import weka.classifiers.trees.RandomForest;
@@ -22,21 +20,21 @@ public class ModelEvaluation {
 
     public static void main(String[] args) throws IOException{
 
-        CustomDataset dataset = DatasetUtil.loadCnaPatientData();//loadCnaData();
+        CustomDataset dataset = DatasetUtil.loadCnaDataWithoutZeros();//loadCnaData();
         // RandomForest model
-        RandomForest rf = new RandomForest();
+        /*RandomForest rf = new RandomForest();
         rf.setMaxDepth(100);
-        rf.setNumTrees(10);
-        rf.setNumFeatures(0);
+        rf.setNumFeatures(100);
+        rf.setNumTrees(50);
         System.out.println("Max Depth: " + rf.getMaxDepth() +
                 " Num Features: " + rf.getNumFeatures() +
                 " Num Trees: " + rf.getNumTrees());
-        Classifier cls = new WekaClassifier(rf);
+        Classifier cls = new WekaClassifier(rf);*/
 
         // KNN model
-        /*int k = 10;
+        int k = 25;
         System.out.println(k);
-        KNearestNeighbors cls = new KNearestNeighbors(k, new JaccardSimilarity());*/
+        KNearestNeighbors cls = new KNearestNeighbors(k, new JaccardSimilarity());
 
         cls.buildClassifier(dataset);
         Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(cls, dataset);
