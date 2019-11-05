@@ -60,7 +60,7 @@ public class CancerTypeServiceImpl implements CancerTypeService {
         }
 
         // Test - classify all instances and print results - for experiment only
-        int correct = 0, wrong = 0;
+        /*int correct = 0, wrong = 0;
         Set<String> top15 = new HashSet<String>(
                 Arrays.asList("Breast Cancer", "Non-Small Cell Lung Cancer", "Colorectal Cancer", "Prostrate Cancer",
                         "Glioma", "Esphagogastric Cancer", "Soft Tissue Sarcoma", "Hepatobilary Cancer",
@@ -98,7 +98,7 @@ public class CancerTypeServiceImpl implements CancerTypeService {
         }
         lastComma = sbt.lastIndexOf(",");
         sbt.replace(lastComma, lastComma+2 , "]");
-        System.out.println(sbt.toString());
+        System.out.println(sbt.toString());*/
 
         CancerTypeDTO dto = new CancerTypeDTO();
         dto.setPatientId(patientId);
