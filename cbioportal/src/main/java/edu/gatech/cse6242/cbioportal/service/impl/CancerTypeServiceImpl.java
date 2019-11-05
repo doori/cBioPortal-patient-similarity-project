@@ -28,7 +28,7 @@ public class CancerTypeServiceImpl implements CancerTypeService {
     @Override
     public CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException {
         // load data
-        CustomDataset cnaData = DatasetUtil.loadCnaDataWithoutZeros();
+        CustomDataset cnaData = DatasetUtil.loadCnaData();
 
         Classifier cls = classificationService.getTrainedRandomForest(cnaData);
         return predictCancerType(patientId, cls, cnaData);
@@ -37,7 +37,7 @@ public class CancerTypeServiceImpl implements CancerTypeService {
     @Override
     public CancerTypeDTO predictCancerTypeKNN(String patientId) throws Exception {
         // load data
-        CustomDataset cnaData = DatasetUtil.loadCnaDataWithoutZeros();
+        CustomDataset cnaData = DatasetUtil.loadCnaData();
 
         Classifier cls = classificationService.getTrainedKNearestNeighbors(cnaData);
         return predictCancerType(patientId, cls, cnaData);
