@@ -7,4 +7,6 @@ import java.io.IOException;
 public interface CancerTypeService {
 
     CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException;
+
+    CancerTypeDTO predictCancerTypeKNN(String patientId) throws Exception;
 }

@@ -53,11 +53,14 @@ public class ApiController {
     @GetMapping("cancer-type-prediction")
     public ResponseEntity<CancerTypeDTO> getCancerTypePrediction(
             @RequestParam String id,
-            @RequestParam(defaultValue = "rf") String classifier) throws IOException {
+            @RequestParam(defaultValue = "rf") String classifier) throws Exception {
 
         CancerTypeDTO cancerTypeDTO = null;
         if ("rf".equalsIgnoreCase(classifier)) {
             cancerTypeDTO = cancerTypeService.predictCancerTypeRF(id);
+        }
+        if ("knn".equalsIgnoreCase(classifier)) {
+            cancerTypeDTO = cancerTypeService.predictCancerTypeKNN(id);
         }
         return new ResponseEntity<>(cancerTypeDTO, HttpStatus.OK);
     }
