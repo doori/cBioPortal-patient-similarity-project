@@ -1,5 +1,7 @@
 package edu.gatech.cse6242.cbioportal.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,7 @@ public class Sample {
     @Id
     private Long id;
     private String patientId;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="PATIENT_IDX", nullable=false)
     private Patient patient;

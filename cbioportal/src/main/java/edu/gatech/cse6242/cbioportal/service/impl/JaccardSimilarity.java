@@ -34,8 +34,8 @@ public class JaccardSimilarity extends AbstractSimilarity {
                 denom++;
             }
         }
-        if (denom == numer) {
-            return 0.0;
+        if (denom == numer || numer == 0.0) {
+            return 0.0000001;
         }
         return numer / (denom - numer);
     }

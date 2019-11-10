@@ -1,5 +1,7 @@
 ## To install, run:  pip install -r requirements.txt
 ## Prerequisites: pip
 
-# pandas
 pandas
+matplotlib==3.1.0
+numpy
+sklearn

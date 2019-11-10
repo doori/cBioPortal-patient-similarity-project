@@ -7,13 +7,12 @@ import edu.gatech.cse6242.cbioportal.persistence.PatientRepository;
 import edu.gatech.cse6242.cbioportal.persistence.SampleRepository;
 import edu.gatech.cse6242.cbioportal.service.SimilarityService;
 import edu.gatech.cse6242.cbioportal.util.CustomDataset;
+import edu.gatech.cse6242.cbioportal.util.DatasetUtil;
 import net.sf.javaml.distance.DistanceMeasure;
-import net.sf.javaml.tools.data.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import net.sf.javaml.core.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,14 +35,15 @@ public class SimilarityServiceImpl implements SimilarityService {
         return getSimilarPatients(patientId, limit, jaccard);
     }
 
+    @Override
+    public Patient getPatientDetails(String patientId) {
+        return patientRepository.findByPatientId(patientId);
+    }
+
     private List<PatientDTO> getSimilarPatients(String patientId, int limit, DistanceMeasure dm) throws IOException {
 
-        File file = new File("data/msk_processed.tsv");
-        Dataset data = FileHandler.loadDataset(file, 0, "\t");
-        CustomDataset cnaData = new CustomDataset(data);
+        CustomDataset cnaData = DatasetUtil.loadCnaData();
 
-        // remove header
-        cnaData.remove(0);
         Patient patient = patientRepository.findByPatientId(patientId);
         int id = patient.getId().intValue();
 
