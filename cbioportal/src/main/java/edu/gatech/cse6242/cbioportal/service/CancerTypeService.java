@@ -9,4 +9,6 @@ public interface CancerTypeService {
     CancerTypeDTO predictCancerTypeRF(String patientId) throws IOException;
 
     CancerTypeDTO predictCancerTypeKNN(String patientId) throws Exception;
+
+    void evaluateKnnModel() throws Exception;
 }

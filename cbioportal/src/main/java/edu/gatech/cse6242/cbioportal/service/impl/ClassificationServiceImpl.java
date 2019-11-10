@@ -7,7 +7,6 @@ import net.sf.javaml.classification.KNearestNeighbors;
 import net.sf.javaml.tools.weka.WekaClassifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import weka.classifiers.functions.MultilayerPerceptron;
 import weka.classifiers.trees.RandomForest;
 
 @Service

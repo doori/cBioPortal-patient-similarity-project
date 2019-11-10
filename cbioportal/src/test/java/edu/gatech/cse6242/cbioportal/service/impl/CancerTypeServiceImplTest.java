@@ -21,6 +21,11 @@ public class CancerTypeServiceImplTest {
     private CancerTypeService cancerTypeService;
 
     @Test
+    public void testEvaluateKnnModel() throws Exception {
+        cancerTypeService.evaluateKnnModel();
+    }
+
+    @Test
     public void testPredictCancerTypeRF() throws IOException {
         CancerTypeDTO dto = cancerTypeService.predictCancerTypeRF("P-0000004");
 
