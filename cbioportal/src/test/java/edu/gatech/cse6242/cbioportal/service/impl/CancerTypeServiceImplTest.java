@@ -24,6 +24,23 @@ public class CancerTypeServiceImplTest {
     public void testEvaluateKnnModel() throws Exception {
         cancerTypeService.evaluateKnnModel();
     }
+    /*
+  **Jaccard 0.34667
+
+    JaccardAdj(0.1) 0.305
+   *JaccardAdj(0.2) 0.345
+    JaccardAdj(0.4) 0.31275
+    JaccardAdj(0.6) 0.3275
+    JaccardAdj(0.6) 0.31667
+
+   *JaccardExp 0.3325 0.345
+
+    (ExactMatch, SomeAlteration, NoAlteration)
+    JaccardExtended(3,2,-1) 0.32
+    JaccardExtended(3,1,-1) 0.3225
+    JaccardExtended(5,1,-1) 0.2833
+    JaccardExtended(10,1,-1) 0.1975
+    */
 
     @Test
     public void testPredictCancerTypeRF() throws IOException {

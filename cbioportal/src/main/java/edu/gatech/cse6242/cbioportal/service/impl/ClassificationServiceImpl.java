@@ -29,7 +29,7 @@ public class ClassificationServiceImpl implements ClassificationService {
     @Cacheable("trainedKNN")
     public Classifier getTrainedKNearestNeighbors(CustomDataset dataset) throws Exception {
 
-        KNearestNeighbors cls = new KNearestNeighbors(10, new JaccardSimilarity());
+        KNearestNeighbors cls = new KNearestNeighbors(10, new JaccardExpSimilarity());
         cls.buildClassifier(dataset);
         return cls;
     }
