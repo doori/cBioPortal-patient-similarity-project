@@ -36,6 +36,11 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     @Override
+    public List<Patient> getAllPatients() {
+        return patientRepository.findAll();
+    }
+
+    @Override
     public Patient getPatientDetails(String patientId) {
         return patientRepository.findByPatientId(patientId);
     }

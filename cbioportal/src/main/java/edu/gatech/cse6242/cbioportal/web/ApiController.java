@@ -23,10 +23,10 @@ public class ApiController {
     @Autowired
     CancerTypeService cancerTypeService;
 
-    @GetMapping("helloworld")
+    @GetMapping("patients")
     public ResponseEntity<List<Patient>> getPatients() {
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        List<Patient> allPatients = similarityService.getAllPatients();
+        return new ResponseEntity<>(allPatients, HttpStatus.OK);
     }
 
     @GetMapping("similar-patients")
