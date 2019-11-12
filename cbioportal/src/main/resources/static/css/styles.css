@@ -39,8 +39,13 @@ Elements
   position: relative;
 }
 
+.overflow-all{
+  overflow:auto;
+  /* overflow-x:scroll;  
+  overflow-y:scroll; */
+}
 .patient-similarity-node-graph{
-  height: 700px;
+  height: 700px;  
 }
 
 .patient-similarity-distribution-graph{

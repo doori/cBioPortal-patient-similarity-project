@@ -13,7 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./service/CoreClient.js"></script>
+    <script src="./service/Api.js"></script>
 </head>
 
 <body>
@@ -78,7 +80,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8 col-md-8 patient-similarity-node-graph panel panel-default"
+            <div class="col-lg-8 col-md-8 patient-similarity-node-graph panel panel-default overflow-all"
                 id="patient-similarity-node-graph">
             </div>
             <div class="col-lg-4 col-md-4 patient-similarity-node-graph">
@@ -182,7 +184,7 @@
                                     <th scope="col">Metastatic Site</th>
                                     <th scope="col">Sample Class</th>
                                     <th scope="col">Oncotree Code</th>
-                                    <th scope="col">Cancer Type  Detailed</th>
+                                    <th scope="col">Cancer Type Detailed</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -324,5 +326,8 @@
 <!--Support styles and scripts-->
 <link rel="stylesheet" href="d3-content/nodes/style.css">
 <script src="d3-content/nodes/node-graph.js"></script>
+<script>
+    getPatientsGraph().then(() => doDrawGraph());
+</script>
 
 </html>
