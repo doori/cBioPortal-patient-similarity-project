@@ -15,4 +15,5 @@ public interface SimilarityService {
 
     Patient getPatientDetails(String patientId);
 
+    List<Patient> getAllPatients();
 }

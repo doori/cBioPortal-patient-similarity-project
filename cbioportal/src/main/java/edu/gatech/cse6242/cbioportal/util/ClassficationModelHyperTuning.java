@@ -1,5 +1,6 @@
-package edu.gatech.cse6242.cbioportal.service.impl;
+package edu.gatech.cse6242.cbioportal.util;
 
+import edu.gatech.cse6242.cbioportal.service.impl.JaccardSimilarity;
 import edu.gatech.cse6242.cbioportal.util.CustomDataset;
 import edu.gatech.cse6242.cbioportal.util.DatasetUtil;
 import net.sf.javaml.classification.Classifier;
@@ -14,27 +15,37 @@ import java.io.IOException;
 import java.util.Map;
 
 /*
-Model Evaluation with Cross Validation and save results to file
+Hyper-parameter tuning utility for RF and KNN.
  */
-public class ModelEvaluation {
+public class ClassficationModelHyperTuning {
 
-    public static void main(String[] args) throws IOException{
-
-        CustomDataset dataset = DatasetUtil.loadCnaDataWithoutZeros();//loadCnaData();
-        // RandomForest model
-        /*RandomForest rf = new RandomForest();
+    private static Classifier getRFmodel() {
+        RandomForest rf = new RandomForest();
         rf.setMaxDepth(100);
         rf.setNumFeatures(100);
         rf.setNumTrees(50);
         System.out.println("Max Depth: " + rf.getMaxDepth() +
                 " Num Features: " + rf.getNumFeatures() +
                 " Num Trees: " + rf.getNumTrees());
-        Classifier cls = new WekaClassifier(rf);*/
+        Classifier cls = new WekaClassifier(rf);
+        return cls;
+    }
 
-        // KNN model
+    private static KNearestNeighbors getKNNmodel() {
         int k = 25;
         System.out.println(k);
         KNearestNeighbors cls = new KNearestNeighbors(k, new JaccardSimilarity());
+        return cls;
+    }
+
+    public static void main(String[] args) throws IOException{
+
+        CustomDataset dataset = DatasetUtil.loadCnaDataWithoutZeros();
+        // RandomForest model
+        Classifier cls = getRFmodel();
+
+        // KNN model
+        //KNearestNeighbors cls = getKNNmodel();
 
         cls.buildClassifier(dataset);
         Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(cls, dataset);
