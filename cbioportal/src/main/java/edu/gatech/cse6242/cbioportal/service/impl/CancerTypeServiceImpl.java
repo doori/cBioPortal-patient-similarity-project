@@ -59,8 +59,22 @@ public class CancerTypeServiceImpl implements CancerTypeService {
             }
         }
 
-        // Test - classify all instances and print results - for experiment only
-        /*int correct = 0, wrong = 0;
+        CancerTypeDTO dto = new CancerTypeDTO();
+        dto.setPatientId(patientId);
+        dto.setCancerType(prediction);
+        dto.setClassDistribution(nonZeroClasses);
+
+        return dto;
+    }
+
+    // Classify all instances and print results - for experiment only
+    public void evaluateKnnModel() throws Exception {
+
+        CustomDataset cnaData = DatasetUtil.loadCnaDataWithoutZeros();
+
+        Classifier cls = classificationService.getTrainedKNearestNeighbors(cnaData);
+
+        int correct = 0, wrong = 0;
         Set<String> top15 = new HashSet<String>(
                 Arrays.asList("Breast Cancer", "Non-Small Cell Lung Cancer", "Colorectal Cancer", "Prostrate Cancer",
                         "Glioma", "Esphagogastric Cancer", "Soft Tissue Sarcoma", "Hepatobilary Cancer",
@@ -80,8 +94,8 @@ public class CancerTypeServiceImpl implements CancerTypeService {
                     wrong++;
             }
         }
-        System.out.println("Correct predictions  " + correct);
-        System.out.println("Wrong predictions " + wrong);
+        System.out.println("# Correct predictions:  " + correct);
+        System.out.println("# Wrong predictions: " + wrong);
 
         // Print Prediction and Actual for Confusion Matrix
         StringBuilder sb = new StringBuilder("yPred = [");
@@ -98,13 +112,7 @@ public class CancerTypeServiceImpl implements CancerTypeService {
         }
         lastComma = sbt.lastIndexOf(",");
         sbt.replace(lastComma, lastComma+2 , "]");
-        System.out.println(sbt.toString());*/
+        System.out.println(sbt.toString());
 
-        CancerTypeDTO dto = new CancerTypeDTO();
-        dto.setPatientId(patientId);
-        dto.setCancerType(prediction);
-        dto.setClassDistribution(nonZeroClasses);
-
-        return dto;
     }
 }
