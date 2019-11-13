@@ -1,23 +1,33 @@
 
 // get the data
-let patientList = [];
 let links = [];
 
+async function getPatientListInformation() {
+    let client = new Api();
 
-async function getPatientsGraph() {
+    let patientListResult = await client.GetAllPatients();
 
-    //this values are from UI
-    const initialPatientId = 'P-0000004';
-    const count = 5;
-    const depth = 3;
+    return patientListResult.data.map((patient) => {
+        return {
+            patientId: patient.patientId,
+            value: patient.patientId + " | " + patient.sex + " | " + patient.vitalStatus + " | " + patient.samples[0].cancerType
+        }
+    });
+}
+
+async function getPatientsGraph(patientId, patientCount = 100, depth = 0) {
+    patientCount = patientCount == null || patientCount == "" ? 100 : patientCount;
+    depth = depth == null || depth == "" ? 0 : depth;
 
     let localList = [];
 
     let client = new Api();
 
-    let response = await client.GetSimilarPatients(initialPatientId, count);
+    let response = await client.GetSimilarPatients(patientId, patientCount);
 
     response.data.map((patient) => {
+        patientList.push(patient);
+
         localList.push({
             source: response.config.params.id,
             target: patient.patientId,
@@ -25,10 +35,10 @@ async function getPatientsGraph() {
         });
     });
 
-    links = await recursiveGetPatientList(depth, 0, [], localList); //depth - 1 is actual depth
+    links = await recursiveGetPatientList(patientCount, depth, 0, [], localList); //depth - 1 is actual depth
 }
 
-async function recursiveGetPatientList(depth, iteration, state, next) {
+async function recursiveGetPatientList(patientCount, depth, iteration, state, next) {
     let localPatientList = [];
 
     if (depth == iteration) {
@@ -38,26 +48,27 @@ async function recursiveGetPatientList(depth, iteration, state, next) {
         let filteredArr = next.filter(p => state.map(s => s.source).indexOf(p.target) < 0); //excluding targets already calculated        
 
         const response = await Promise.all(filteredArr.map(async (patientNode) => {
-            return await client.GetSimilarPatients(patientNode.target);
+            return await client.GetSimilarPatients(patientNode.target, patientCount);
         }));
 
         response.map((content) => {
             content.data.map((patient) => {
+                patientList.push(patient);
+
                 localPatientList.push({
                     source: content.config.params.id,
                     target: patient.patientId,
                     value: patient.similarity * 10
                 });
-                //TODO: Add patient information to patientList, to avoid more calls & populate the patient table
             });
         });
 
-        return await recursiveGetPatientList(depth, iteration + 1, [...state, ...next], localPatientList);
+        return await recursiveGetPatientList(patientCount, depth, iteration + 1, [...state, ...next], localPatientList);
     }
 }
 
 //TODO: COnfirm graph style before final version
-function doDrawGraph() {
+function doDrawNodeGraph() {
     var nodes = {};
 
     // Compute the distinct nodes from the links.

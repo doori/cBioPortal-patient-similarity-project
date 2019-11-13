@@ -7,12 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/styles.css">
 
     <!--Required js libraries-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+
+    <script src="./libs/autocomplete.min.js"></script>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./service/CoreClient.js"></script>
     <script src="./service/Api.js"></script>
@@ -37,43 +41,23 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control hidden-component" placeholder="Patients Count"
+                            id="patients-count">
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <div class="form-group">
+                        <input type="text" class="form-control hidden-component" placeholder="Graph Depth"
+                            id="patients-graph-depth">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control hidden-component" required="true"
+                            placeholder="Select Initial Patient" id="search-field">
+                        <input type="hidden" id="search-hidden-field">
+                    </div>
+                    <button type="submit" class="btn btn-default hidden-component" id="btn-do-search">Search</button>
+
                 </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
@@ -187,128 +171,7 @@
                                     <th scope="col">Cancer Type Detailed</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row" class="headcol">P-0000110</th>
-                                    <!-- <td>P-0000110</td> -->
-                                    <td>0.333</td>
-                                    <td>Non-Small Cell Lung Cancer</td>
-                                    <td>Male</td>
-                                    <td>ALIVE</td>
-                                    <td>Prev/Curr Smoker</td>
-                                    <td>33.50</td>
-                                    <td>LIVING</td>
-                                    <td>In-House</td>
-                                    <td>FFPE</td>
-                                    <td>Resection</td>
-                                    <td>250</td>
-                                    <td>866</td>
-                                    <td>50</td>
-                                    <td>Matched</td>
-                                    <td>Primary</td>
-                                    <td>Lung</td>
-                                    <td>Not Applicable</td>
-                                    <td>Tumor</td>
-                                    <td>LUAD</td>
-                                    <td>Lung Adenocarcinoma</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="headcol">P-0004706</th>
-                                    <!-- <td>P-0004706</td> -->
-                                    <td>0.3076923076923077</td>
-                                    <td>Melanoma</td>
-                                    <td>Male</td>
-                                    <td>ALIVE</td>
-                                    <td>Never</td>
-                                    <td>14.46</td>
-                                    <td>LIVING</td>
-                                    <td>Outside</td>
-                                    <td>DNA</td>
-                                    <td>Resection</td>
-                                    <td>250</td>
-                                    <td>577</td>
-                                    <td>60</td>
-                                    <td>Matched</td>
-                                    <td>Metastasis</td>
-                                    <td>Eye</td>
-                                    <td>Colon</td>
-                                    <td>Tumor</td>
-                                    <td>UM</td>
-                                    <td>Uveal Melanoma</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="headcol">P-0005453</th>
-                                    <!-- <td>P-0005453</td> -->
-                                    <td>0.4</td>
-                                    <td>Gastrointestinal Stromal Tumor</td>
-                                    <td>Male</td>
-                                    <td>ALIVE</td>
-                                    <td>Unknown</td>
-                                    <td>14.92</td>
-                                    <td>LIVING</td>
-                                    <td>In-House</td>
-                                    <td>DNA</td>
-                                    <td>Resection</td>
-                                    <td>250</td>
-                                    <td>868</td>
-                                    <td>80</td>
-                                    <td>Matched</td>
-                                    <td>Primary</td>
-                                    <td>Small Bowel</td>
-                                    <td>Not Applicable</td>
-                                    <td>Tumor</td>
-                                    <td>GIST</td>
-                                    <td>Gastrointestinal Stromal Tumor</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="headcol">P-0007071</th>
-                                    <!-- <td>P-0007071</td> -->
-                                    <td>0.3</td>
-                                    <td>Hepatobiliary Cancer</td>
-                                    <td>Female</td>
-                                    <td>ALIVE</td>
-                                    <td>Never</td>
-                                    <td>7.69</td>
-                                    <td>LIVING</td>
-                                    <td>In-House</td>
-                                    <td>FFPE</td>
-                                    <td>Resection</td>
-                                    <td>250</td>
-                                    <td>799</td>
-                                    <td>20</td>
-                                    <td>Matched</td>
-                                    <td>Primary</td>
-                                    <td>Gallbladder</td>
-                                    <td>Not Applicable</td>
-                                    <td>Tumor</td>
-                                    <td>GBC</td>
-                                    <td>Gallbladder Cancer</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="headcol">P-0008312</th>
-                                    <!-- <td>P-0008312</td> -->
-                                    <td>0.3076923076923077</td>
-                                    <td>Soft Tissue Sarcoma</td>
-                                    <td>Female</td>
-                                    <td>DECEASED</td>
-                                    <td>Never</td>
-                                    <td>NA</td>
-                                    <td>DECEASED</td>
-                                    <td>Outside</td>
-                                    <td>FFPE</td>
-                                    <td>Resection</td>
-                                    <td>250</td>
-                                    <td>819</td>
-                                    <td>80</td>
-                                    <td>Matched</td>
-                                    <td>Primary</td>
-                                    <td>Knee</td>
-                                    <td>Not Applicable</td>
-                                    <td>Tumor</td>
-                                    <td>MFH</td>
-                                    <td>Undifferentiated Pleomorphic Sarcoma/Malignant Fibrous Histiocytoma/High-Grade
-                                        Spindle Cell Sarcoma</td>
-                                </tr>
+                            <tbody id="patients-table-body">
                             </tbody>
                         </table>
                     </div><!-- /.table-responsive -->
@@ -319,15 +182,72 @@
 
     </div><!-- /.container-fluid -->
 
-
-
+    <div id="spinner-group">
+        <div class="overlay-all">
+            &nbsp;
+        </div>
+        <div class="loader">
+            <!-- <div class="loader-h1">Loading Data</div> -->
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+            <div class="nucleobase"></div>
+        </div>
+    </div><!-- /.spinner-group -->
 
 </body>
 <!--Support styles and scripts-->
 <link rel="stylesheet" href="d3-content/nodes/style.css">
 <script src="d3-content/nodes/node-graph.js"></script>
+<script src="d3-content/patientTable/patientTable.js"></script>
 <script>
-    getPatientsGraph().then(() => doDrawGraph());
+    let patientList = [];
+
+
+    $("form").submit(function (e) {
+        e.preventDefault();
+    });
+
+    getPatientListInformation().then((list) => {
+        $("#spinner-group").hide();
+
+        $('#search-field').autocomplete({
+            nameProperty: 'value',
+            valueProperty: 'patientId',
+            valueField: '#search-hidden-field',
+            dataSource: list
+        });
+
+        $('#btn-do-search').show();
+        $('#search-field').show();
+
+        $("#btn-do-search").click(function () {
+            patientList = [];
+            
+            let patientId = $("#search-hidden-field").val();
+            let patientCount = $("#patients-count").val();
+            let graphDepth = $("#patients-graph-depth").val();
+
+            if (patientId == "") { return; }
+
+            $("#patient-similarity-node-graph").empty();
+
+            $("#spinner-group").show();
+
+            getPatientsGraph(patientId, patientCount == "" ? null : patientCount, graphDepth == "" ? null : graphDepth).then(() => {
+                $("#spinner-group").hide();
+                doDrawNodeGraph();
+                doPopulatePatientsTable(patientList);
+            });
+        });
+    });
+
 </script>
 
 </html>

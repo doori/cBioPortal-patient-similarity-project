@@ -1,3 +1,4 @@
+// import CoreClient from './CoreClient';
 
 class Api {
     constructor() {
@@ -7,15 +8,20 @@ class Api {
         this.client.createEntities(
             [
                 { name: 'patient' },
+                { name: 'patients' },
                 { name: 'similar-patients' },
             ]);
     }
 
     GetPatientInfo(patientId) {
-        return this.client.endpoints.patient.getAll({ id: patientId })
+        return this.client.endpoints.patient.getAll({ id: patientId });
     }
 
-    GetSimilarPatients(patientId, count = 5) {
-        return this.client.endpoints.similarPatients.getAll({ id: patientId, limit: count })
+    GetSimilarPatients(patientId, count) {
+        return this.client.endpoints.similarPatients.getAll({ id: patientId, limit: count });
+    }
+
+    GetAllPatients() {
+        return this.client.endpoints.patients.getAll();
     }
 }
