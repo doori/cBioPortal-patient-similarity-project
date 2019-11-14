@@ -15,7 +15,7 @@ async function getPatientListInformation() {
     });
 }
 
-async function getPatientsGraph(patientId, patientCount = 100, depth = 0) {
+async function getPatientsSimilarityGraph(patientId, patientCount = 100, depth = 0) {
     patientCount = patientCount == null || patientCount == "" ? 100 : patientCount;
     depth = depth == null || depth == "" ? 0 : depth;
 
@@ -69,7 +69,7 @@ async function recursiveGetPatientList(patientCount, depth, iteration, state, ne
 
 //TODO: COnfirm graph style before final version
 function doDrawNodeGraph() {
-    var nodes = {};
+    let nodes = {};
 
     // Compute the distinct nodes from the links.
     links.forEach(function (link) {
@@ -79,19 +79,21 @@ function doDrawNodeGraph() {
             (nodes[link.target] = { name: link.target });
     });
 
-    var parent = d3.select("#patient-similarity-node-graph");
+    let parent = d3.select("#patient-similarity-node-graph");
 
-    var svg = parent.append("svg"),
-        width = +parent.style("width").slice(0, -2) + 200,
-        height = +parent.style("height").slice(0, -2) + 200;
+    let svg = parent.append("svg"),
+        width = parent.node().getBoundingClientRect().width - 30,
+        height = parent.node().getBoundingClientRect().height - 30;
+    //width = +parent.style("width").slice(0, -2) + 200,
+    //height = +parent.style("height").slice(0, -2) + 200;
 
     svg.attr("width", width)
         .attr("height", height)
         .attr("preserveAspectRatio", "xMinYMin meet")
 
-    var color = d3.scaleLinear().domain([6, 26]).range(["white", "blue"]);
+    let color = d3.scaleLinear().domain([6, 26]).range(["white", "blue"]);
 
-    var force = d3.forceSimulation()
+    let force = d3.forceSimulation()
         .nodes(d3.values(nodes))
         .force("link", d3.forceLink(links).distance(100))
         .force('center', d3.forceCenter(width / 2, height / 2))
@@ -102,7 +104,7 @@ function doDrawNodeGraph() {
         .on("tick", tick);
 
     // add the links and the arrows
-    var path = svg.append("g")
+    let path = svg.append("g")
         .selectAll("path")
         .data(links)
         .enter()
@@ -110,7 +112,7 @@ function doDrawNodeGraph() {
         .attr("class", function (d) { return d.value == 0 ? "dashedLink" : "solidLink"; }); //set the solid/dashed links
 
     // define the nodes
-    var node = svg.selectAll(".node")
+    let node = svg.selectAll(".node")
         .data(force.nodes())
         .enter().append("g")
         .attr("class", "node")
@@ -165,7 +167,7 @@ function doDrawNodeGraph() {
     // add the curvy lines
     function tick() {
         path.attr("d", function (d) {
-            var dx = d.target.x - d.source.x,
+            let dx = d.target.x - d.source.x,
                 dy = d.target.y - d.source.y,
                 dr = Math.sqrt(dx * dx + dy * dy);
 
@@ -181,6 +183,10 @@ function doDrawNodeGraph() {
             .attr("transform", function (d) {
                 return "translate(" + d.x + "," + d.y + ")";
             })
+
+
+        node.attr("cx", function (d) { return d.x = Math.max(30, Math.min(width - 30, d.x)); })
+            .attr("cy", function (d) { return d.y = Math.max(30, Math.min(height - 30, d.y)); });
     };
 
     function dragstarted(d) {

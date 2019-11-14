@@ -10,6 +10,7 @@ class Api {
                 { name: 'patient' },
                 { name: 'patients' },
                 { name: 'similar-patients' },
+                { name: 'cancer-type-prediction' },
             ]);
     }
 
@@ -23,5 +24,9 @@ class Api {
 
     GetAllPatients() {
         return this.client.endpoints.patients.getAll();
+    }
+
+    GetCancerTypePrediction(patientId) {
+        return this.client.endpoints.cancerTypePrediction.getAll({ id: patientId });
     }
 }

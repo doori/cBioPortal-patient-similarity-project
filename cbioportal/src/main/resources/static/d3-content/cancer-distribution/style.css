@@ -1,0 +1,24 @@
+.bar{
+    fill: steelblue;
+}
+.bar:hover{
+    fill: brown;
+}
+.axis {
+    font: 11px sans-serif;
+}
+.axis path,
+.axis line{
+    fill:none;
+    stroke: #000;
+    shape-rendering:crispEdges;
+}
+.toolTip{
+    position: absolute;
+    display: none;
+    height: auto;
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #6F257F;
+    padding: 14px;
+    text-align: center;
+}

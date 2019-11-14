@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/styles.css">
 
+
     <!--Required js libraries-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -71,6 +72,11 @@
                 <div class="panel panel-default patient-similarity-distribution-graph-1">
                     <div class="panel-heading">
                         Support Graph A
+                    </div>
+                    <div class="panel-content">
+                        <!-- <svg id="patient-similarity-cancer-distribution" width="750" height="600"></svg> -->
+
+                        <div id="patient-similarity-cancer-distribution"></div>
                     </div>
                 </div>
 
@@ -204,8 +210,13 @@
 </body>
 <!--Support styles and scripts-->
 <link rel="stylesheet" href="d3-content/nodes/style.css">
+
 <script src="d3-content/nodes/node-graph.js"></script>
 <script src="d3-content/patientTable/patientTable.js"></script>
+
+<link rel="stylesheet" href="d3-content/cancer-distribution/style.css">
+<script src="d3-content/cancer-distribution/cancer-graph.js"></script>
+
 <script>
     let patientList = [];
 
@@ -229,7 +240,8 @@
 
         $("#btn-do-search").click(function () {
             patientList = [];
-            
+            patientCancerDistribution = [];
+
             let patientId = $("#search-hidden-field").val();
             let patientCount = $("#patients-count").val();
             let graphDepth = $("#patients-graph-depth").val();
@@ -240,11 +252,17 @@
 
             $("#spinner-group").show();
 
-            getPatientsGraph(patientId, patientCount == "" ? null : patientCount, graphDepth == "" ? null : graphDepth).then(() => {
+            const patientGraphResult = getPatientsSimilarityGraph(patientId, patientCount == "" ? null : patientCount, graphDepth == "" ? null : graphDepth);
+
+            const patientCancerDistributionGraph = getCancerDistributionGraph(patientId);
+
+            Promise.all([patientGraphResult, patientCancerDistributionGraph]).then(() => {
                 $("#spinner-group").hide();
                 doDrawNodeGraph();
                 doPopulatePatientsTable(patientList);
+                doDrawCancerDistributionGraph(patientCancerDistribution);
             });
+
         });
     });
 

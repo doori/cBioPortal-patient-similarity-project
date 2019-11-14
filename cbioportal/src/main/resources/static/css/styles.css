@@ -53,7 +53,7 @@ Elements
 }
 .patient-similarity-distribution-graph-1{
   height: 350px;
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
 }
 
 .patient-similarity-distribution-graph-2{
