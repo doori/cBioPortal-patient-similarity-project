@@ -4,6 +4,9 @@ import edu.gatech.cse6242.cbioportal.service.ClassificationService;
 import edu.gatech.cse6242.cbioportal.util.CustomDataset;
 import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.classification.KNearestNeighbors;
+import net.sf.javaml.distance.MahalanobisDistance;
+import net.sf.javaml.distance.PolynomialKernel;
+import net.sf.javaml.distance.RBFKernel;
 import net.sf.javaml.tools.weka.WekaClassifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -28,8 +31,8 @@ public class ClassificationServiceImpl implements ClassificationService {
 
     @Cacheable("trainedKNN")
     public Classifier getTrainedKNearestNeighbors(CustomDataset dataset) throws Exception {
-
-        KNearestNeighbors cls = new KNearestNeighbors(10, new JaccardExpSimilarity());
+        // DistanceMeasure for KNN can be changed below.
+        KNearestNeighbors cls = new KNearestNeighbors(10, new PolynomialKernelSimilarity(2));
         cls.buildClassifier(dataset);
         return cls;
     }

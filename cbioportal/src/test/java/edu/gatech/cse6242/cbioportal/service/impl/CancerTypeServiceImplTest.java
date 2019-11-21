@@ -43,6 +43,9 @@ public class CancerTypeServiceImplTest {
     JaccardExtended(5,1,-1) 0.2833
     JaccardExtended(10,1,-1) 0.1975
 
+    RBFKernel  0.3033
+
+
     SKLEARN k=10
     auto      0.415
     ball_tree 0.3925
