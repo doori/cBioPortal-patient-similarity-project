@@ -2,7 +2,7 @@
 
 class Api {
     constructor() {
-        this.apiPath = 'http://40.114.12.18:8080/api';
+        this.apiPath = 'http://localhost:8080/api';
 
         this.client = new CoreClient({ url: this.apiPath });
         this.client.createEntities(

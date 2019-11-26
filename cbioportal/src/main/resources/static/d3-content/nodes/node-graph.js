@@ -68,7 +68,7 @@ async function recursiveGetPatientList(patientCount, depth, iteration, state, ne
 }
 
 //TODO: COnfirm graph style before final version
-function doDrawNodeGraph() {
+function doDrawNodeGraph(initialPatientId) {
     let nodes = {};
 
     // Compute the distinct nodes from the links.
@@ -99,8 +99,8 @@ function doDrawNodeGraph() {
         .force('center', d3.forceCenter(width / 2, height / 2))
         .force("x", d3.forceX())
         .force("y", d3.forceY())
-        .force("charge", d3.forceManyBody().strength(-250))
-        .alphaTarget(1)
+        .force("charge", d3.forceManyBody().strength(-100))
+        .alphaTarget(0.25)
         .on("tick", tick);
 
     // add the links and the arrows
@@ -109,7 +109,7 @@ function doDrawNodeGraph() {
         .data(links)
         .enter()
         .append("path")
-        .attr("class", function (d) { return d.value == 0 ? "dashedLink" : "solidLink"; }); //set the solid/dashed links
+        .attr("class", "solidLink"); //set the solid/dashed links
 
     // define the nodes
     let node = svg.selectAll(".node")
@@ -125,14 +125,18 @@ function doDrawNodeGraph() {
     // add the nodes
     node.append("circle")
         .attr("r", function (d) {
-            minRadius = 10;
+            if (d.name == initialPatientId) {
+                return 10;
+            }
+            minRadius = 4;
 
-            let tempWeight = node.filter(function (l) {
-                return d.name == l.destination;
-            }).size();
+            // let tempWeight = node.filter(function (l) {
+            //     return d.name == l.destination;
+            // }).size();
 
-            d.weight = minRadius + (tempWeight * 2);
-            return d.weight;
+            // d.weight = minRadius + (tempWeight * 2);
+            // return d.weight;
+            return minRadius;
         })
         .style("fill", function (d) {
             return color(d.weight);
@@ -149,7 +153,7 @@ function doDrawNodeGraph() {
     //double click fixes or releases a node movement
     //this double click method is a little unreliable. Sometimes it will force the movement of the 
     //graph before recognizing the event. Slow double click should receive better responses
-    node.on("dblclick", function (d) {
+    node.on("click", function (d) {
         d.fixed = !d.fixed;
 
         if (d.fixed) {
@@ -162,6 +166,12 @@ function doDrawNodeGraph() {
             d.fy = null;
         }
     });
+
+    node.on("customSelect", function () {
+        d3.select(this).selectAll("circle").style("fill", "yellow"); 
+    });
+
+
 
 
     // add the curvy lines
@@ -185,7 +195,7 @@ function doDrawNodeGraph() {
             })
 
 
-        node.attr("cx", function (d) { return d.x = Math.max(30, Math.min(width - 30, d.x)); })
+        node.attr("cx", function (d) { return d.x = Math.max(80, Math.min(width - 80, d.x)); })
             .attr("cy", function (d) { return d.y = Math.max(30, Math.min(height - 30, d.y)); });
     };
 

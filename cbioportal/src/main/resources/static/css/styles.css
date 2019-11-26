@@ -14,9 +14,21 @@ Boostrap overrides
   margin-bottom: 0px;
 }
 
-.col-lg-4, .col-md-4 {
+/* .col-lg-4, .col-md-4 {
   padding-left: 0;
   padding-right: 0;
+} */
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.customContainerWith{
+  width: 95% !important;
 }
 
 /*
@@ -70,7 +82,7 @@ Elements
 }
 
 #patients-graph-depth{
-  width:100px;
+  width:110px;
 }
 
 
@@ -78,11 +90,11 @@ Elements
 Table overflow
 */
 .headcol {
-  position:absolute; 
+  /* position:absolute; 
   width:6em; 
   left:0;
   top:auto;
-  border-right: 0px none black; 
+  border-right: 0px none black;  */
   /*border-top-width:3px; /*only relevant for first row*/
   /*margin-top:-3px;*/ /*compensate for top border*/
 }
@@ -95,15 +107,18 @@ td, th {
   /* margin:0; */
   /* border:3px solid grey;  */
   /* border-top-width:0px;  */
-  white-space:nowrap;
+  /* white-space:nowrap; */
 }
 
 .div-table { 
   /* width: 100%;  */
-  overflow-x:scroll;  
-  margin-left:6em; 
-  overflow-y:visible;
+  /* overflow-x:scroll;   */
+  margin-left:0.5em; 
+  margin-right:0.5em; 
+  margin-top: 0.5em;
+  /* overflow-y:visible; */
   /* padding-bottom:-20px; */
+  /*  */
 }
 
 
@@ -597,3 +612,90 @@ loader-h1:after {
   -webkit-animation-delay: 500ms;
           animation-delay: 500ms;
 } */
+
+/*-------------------------
+	Inline help tip
+--------------------------*/
+
+
+.help-tip{
+	position: absolute;
+	top: 18px;
+	right: 18px;
+	text-align: center;
+	background-color: #BCDBEA;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	font-size: 14px;
+	line-height: 26px;
+  cursor: default;
+}
+
+.help-tip:before{
+	content:'?';
+	font-weight: bold;
+	color:#fff;
+}
+
+.help-tip:hover p{
+	display:block;
+	transform-origin: 100% 0%;
+
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.help-tip p{
+	display: none;
+	text-align: left;
+	background-color: #1E2021;
+	padding: 20px;
+	width: 400px;
+	position: absolute;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+	right: -4px;
+	color: #FFF;
+	font-size: 13px;
+  line-height: 1.4;
+  z-index: 1;
+}
+
+.help-tip p:before{
+	position: absolute;
+	content: '';
+	width:0;
+	height: 0;
+	border:6px solid transparent;
+	border-bottom-color:#1E2021;
+	right:10px;
+	top:-12px;
+}
+
+.help-tip p:after{
+	width:100%;
+	height:40px;
+	content:'';
+	position: absolute;
+	top:-40px;
+	left:0;
+}
+
+@-webkit-keyframes fadeIn {
+	0% { 
+		opacity:0; 
+		transform: scale(0.6);
+	}
+
+	100% {
+		opacity:100%;
+		transform: scale(1);
+	}
+}
+
+@keyframes fadeIn {
+	0% { opacity:0; }
+	100% { opacity:100%; }
+}
