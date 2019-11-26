@@ -111,63 +111,10 @@
 
                     <div class="panel panel-default patient-similarity-distribution-graph-2">
                         <div class="panel-heading bold">
-                            Support Settings / Support Graph B
+                            Cancer Types
                         </div>
-                        <div class="panel-content">
-                            <div>
-                                <button type="button" class="btn btn-toggle active" data-toggle="button"
-                                    aria-pressed="false" autocomplete="off">
-                                    <div class="handle"></div>
-                                </button>
-                                <div class="btn-toogle-label">Cancer Type A</div>
-                            </div>
-
-                            <div>
-                                <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false"
-                                    autocomplete="off">
-                                    <div class="handle"></div>
-                                </button>
-                                <div class="btn-toogle-label">Cancer Type B</div>
-                            </div>
-
-                            <div>
-                                <button type="button" class="btn btn-toggle active" data-toggle="button"
-                                    aria-pressed="false" autocomplete="off">
-                                    <div class="handle"></div>
-                                </button>
-                                <div class="btn-toogle-label">Cancer Type C</div>
-                            </div>
-
-                            <div>
-                                <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false"
-                                    autocomplete="off">
-                                    <div class="handle"></div>
-                                </button>
-                                <div class="btn-toogle-label">Cancer Type E</div>
-                            </div>
-
-                            <div>
-                                <button type="button" class="btn btn-toggle active" data-toggle="button"
-                                    aria-pressed="false" autocomplete="off">
-                                    <div class="handle"></div>
-                                </button>
-                                <div class="btn-toogle-label">Cancer Type F</div>
-                            </div>
-
-                            <div>
-                                <button type="button" class="btn btn-toggle active" data-toggle="button"
-                                    aria-pressed="false" autocomplete="off">
-                                    <div class="handle"></div>
-                                </button>
-                                <div class="btn-toogle-label">Cancer Type G</div>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false"
-                                    autocomplete="off">
-                                    <div class="handle"></div>
-                                </button>
-                                <div class="btn-toogle-label">Cancer Type H</div>
-                            </div>
+                        <div class="panel-content patient-similarity-distribution-graph-2-body"
+                            id="patient-similarity-cancer-navigator-content">
                         </div>
                     </div><!-- /.patient-similarity-distribution-graph-2 -->
                 </div>
@@ -254,6 +201,8 @@
 <link rel="stylesheet" href="d3-content/cancer-distribution/style.css">
 <script src="d3-content/cancer-distribution/cancer-graph.js"></script>
 
+<script src="d3-content/cancer-navigator/cancer-navigator.js"></script>
+
 
 
 <script>
@@ -261,7 +210,7 @@
 
     $(document).ready(() => {
         $('#patients-table').DataTable();
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip({ trigger: "hover", delay: { show: 1000, hide: 100 } })
     });
 
     $("form").submit(function (e) {
@@ -305,6 +254,7 @@
                 doDrawNodeGraph(patientId);
                 doPopulatePatientsTable(patientList);
                 doDrawCancerDistributionGraph(patientCancerDistribution);
+                doPopulateCancerNavigators(patientList);
             });
 
             if (patientCount == "") { $("#patients-count").val('100'); }

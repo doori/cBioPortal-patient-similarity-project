@@ -30,11 +30,11 @@ function doDrawCancerDistributionGraph(cancerDistributionRawData) {
     let margin = {
         top: 20,
         right: 50,
-        bottom: 150,
+        bottom: 100,
         left: 40,
     },
         width = parent.node().getBoundingClientRect().width - 50,
-        height = parent.node().getBoundingClientRect().height - margin.bottom;
+        height = parent.node().getBoundingClientRect().height - margin.bottom - 60;
 
     let svg = parent.append("svg")
         .attr("width", width + margin.left + margin.right)
