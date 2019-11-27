@@ -27,7 +27,7 @@ public class JaccardExtendedSimilarity extends AbstractSimilarity {
             if (ai != 0.0) {
                 denom++;
                 if (ai == bi) {
-                    numer += 10; // Exact Match
+                    numer += 3; // Exact Match
                 } else if (bi != 0.0) {
                     numer += 1; // Some alteration
                 } else {
@@ -38,7 +38,7 @@ public class JaccardExtendedSimilarity extends AbstractSimilarity {
                 denom++;
             }
         }
-        if (denom == numer || numer == 0.0) {
+        if (denom == numer || numer <= 0.0) {
             return 0.0000001;
         }
         return Math.log (numer / (denom - numer));

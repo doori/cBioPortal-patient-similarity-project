@@ -37,7 +37,6 @@ public class JaccardExpSimilarity extends AbstractSimilarity {
         if (denom == numer || numer == 0.0) {
             return 0.0000001;
         }
-        //return numer * numer / (denom - numer);
-        return Math.exp(numer / (denom - numer));
+        return numer * numer / (denom - numer);
     }
 }

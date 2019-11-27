@@ -63,7 +63,7 @@ def patient_matrix(save_fname, exclude_unknowns, exclude_zeros, include_clinical
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='sample command:  python data_preprocess.py -f msk_processed.tsv -u true')
   parser.add_argument("-f", "--file", dest="filename",
-                      help="specify the number of iterations to  the algorithm. Default: msk_processed.tsv",
+                      help="specify the filename to be saved in data folder. Default: msk_processed.tsv",
                       default='msk_processed.tsv', type=str)
 
   parser.add_argument("-u", "--unknown", dest="exclude_unknown_cancer",

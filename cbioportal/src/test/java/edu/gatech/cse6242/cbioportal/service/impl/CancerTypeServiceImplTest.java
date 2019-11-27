@@ -25,21 +25,32 @@ public class CancerTypeServiceImplTest {
         cancerTypeService.evaluateKnnModel();
     }
     /*
-  **Jaccard 0.34667
+    Jaccard 0.34667
 
+    (Small punishments for !match)
     JaccardAdj(0.1) 0.305
    *JaccardAdj(0.2) 0.345
     JaccardAdj(0.4) 0.31275
     JaccardAdj(0.6) 0.3275
     JaccardAdj(0.6) 0.31667
 
-   *JaccardExp 0.3325 0.345
+   *JaccardExpp(n^2/d) 0.345
+    JaccardExp(n^2/d^2) 0.341667
 
     (ExactMatch, SomeAlteration, NoAlteration)
     JaccardExtended(3,2,-1) 0.32
     JaccardExtended(3,1,-1) 0.3225
     JaccardExtended(5,1,-1) 0.2833
     JaccardExtended(10,1,-1) 0.1975
+
+    RBFKernel  0.3033
+
+
+    SKLEARN k=10
+    auto      0.415
+    ball_tree 0.3925
+    kd_tree   0.4125
+   *brute     0.4242
     */
 
     @Test
