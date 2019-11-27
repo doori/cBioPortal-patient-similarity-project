@@ -1,7 +1,5 @@
 
 // get the data
-// let links = [];
-
 async function getPatientListInformation() {
     let client = new Api();
 
@@ -71,7 +69,6 @@ async function recursiveGetPatientList(patientCount, depth, iteration, state, ne
     }
 }
 
-//TODO: COnfirm graph style before final version
 function doDrawNodeGraph(initialPatientId, links) {
     let nodes = {};
 
@@ -88,8 +85,6 @@ function doDrawNodeGraph(initialPatientId, links) {
     let svg = parent.append("svg"),
         width = parent.node().getBoundingClientRect().width - 30,
         height = parent.node().getBoundingClientRect().height - 30;
-    //width = +parent.style("width").slice(0, -2) + 200,
-    //height = +parent.style("height").slice(0, -2) + 200;
 
     svg.attr("width", width)
         .attr("height", height)
@@ -137,9 +132,6 @@ function doDrawNodeGraph(initialPatientId, links) {
 
             return minRadius;
         });
-    // .style("fill", function (d) {
-    //    return color(20);
-    // });
 
     // add the node labels
     node.append("text")
@@ -149,9 +141,7 @@ function doDrawNodeGraph(initialPatientId, links) {
         .attr('x', 10)
         .attr('y', -15);
 
-    //double click fixes or releases a node movement
-    //this double click method is a little unreliable. Sometimes it will force the movement of the 
-    //graph before recognizing the event. Slow double click should receive better responses
+    //click fixes or releases a node movement
     node.on("click", function (d) {
 
         d.fixed = !d.fixed;
@@ -167,6 +157,7 @@ function doDrawNodeGraph(initialPatientId, links) {
         }
     });
 
+    //fills the node with color when toggle activated
     node.on("customSelect", function (e) {
         if (g_PatientList.some(p => p.cancerType == d3.event.detail.cancerType && p.patientId == e.name)) {
             if (d3.event.detail.active) {
@@ -227,39 +218,7 @@ function doDrawNodeGraph(initialPatientId, links) {
     };
 }
 
-function getUniquePatientList(patientList) {
-    const uniquePatientList = [];
-    const map = new Map();
-    for (const patient of patientList) {
-        if (!map.has(patient.patientId)) {
-            map.set(patient.patientId, true);
-            uniquePatientList.push({
-                patientId: patient.patientId,
-                similarity: patient.similarity,
-                cancerType: patient.cancerType,
-                sex: patient.sex,
-                vitalStatus: patient.vitalStatus,
-                smokingHistory: patient.smokingHistory,
-                osMonths: patient.osMonths,
-                osStatus: patient.osStatus,
-                sampleCollectionSource: patient.sampleCollectionSource,
-                specimenPreservationType: patient.specimenPreservationType,
-                specimenType: patient.specimenType,
-                dnaInput: patient.dnaInput,
-                sampleCoverage: patient.sampleCoverage,
-                tumorPurity: patient.tumorPurity,
-                matchedStatus: patient.matchedStatus,
-                sampleType: patient.sampleType,
-                primarySite: patient.primarySite,
-                metastaticSite: patient.metastaticSite,
-                sampleClass: patient.sampleClass,
-                oncotreeCode: patient.oncotreeCode,
-                cancerTypeDetailed: patient.cancerTypeDetailed
-            });
-        }
-    }
-    return uniquePatientList;
-}
+
 
 
 

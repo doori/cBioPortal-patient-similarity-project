@@ -1,5 +1,3 @@
-// const axios = require('axios')
-
 function kebabCaseToCamel(str) {
     return str.replace(/(\-\w)/g, (matches) => matches[1].toUpperCase())
 }

@@ -1,5 +1,3 @@
-// import CoreClient from './CoreClient';
-
 class Api {
     constructor() {
         this.apiPath = 'http://localhost:8080/api';

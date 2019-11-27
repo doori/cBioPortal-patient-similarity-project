@@ -80,3 +80,37 @@
             if (graphDepth == "") { $("#patients-graph-depth").val(DEFAULT_MAX_GRAPH_DEPTH); }
         });
     });
+
+    function getUniquePatientList(patientList) {
+        const uniquePatientList = [];
+        const map = new Map();
+        for (const patient of patientList) {
+            if (!map.has(patient.patientId)) {
+                map.set(patient.patientId, true);
+                uniquePatientList.push({
+                    patientId: patient.patientId,
+                    similarity: patient.similarity,
+                    cancerType: patient.cancerType,
+                    sex: patient.sex,
+                    vitalStatus: patient.vitalStatus,
+                    smokingHistory: patient.smokingHistory,
+                    osMonths: patient.osMonths,
+                    osStatus: patient.osStatus,
+                    sampleCollectionSource: patient.sampleCollectionSource,
+                    specimenPreservationType: patient.specimenPreservationType,
+                    specimenType: patient.specimenType,
+                    dnaInput: patient.dnaInput,
+                    sampleCoverage: patient.sampleCoverage,
+                    tumorPurity: patient.tumorPurity,
+                    matchedStatus: patient.matchedStatus,
+                    sampleType: patient.sampleType,
+                    primarySite: patient.primarySite,
+                    metastaticSite: patient.metastaticSite,
+                    sampleClass: patient.sampleClass,
+                    oncotreeCode: patient.oncotreeCode,
+                    cancerTypeDetailed: patient.cancerTypeDetailed
+                });
+            }
+        }
+        return uniquePatientList;
+    }

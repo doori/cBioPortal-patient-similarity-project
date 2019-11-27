@@ -1,8 +1,3 @@
-/* body {
-  min-height: 2000px;
-  padding-top: 70px;
-} */
-
 /*
 Boostrap overrides
 */
@@ -28,7 +23,6 @@ Elements
 */
 .top-container-nav {
   height: 60px;
-  /* line-height: 40px; */
 }
 
 .navbar-nav > li > a {
@@ -45,8 +39,6 @@ Elements
 
 .overflow-all{
   overflow:auto;
-  /* overflow-x:scroll;  
-  overflow-y:scroll; */
 }
 .patient-similarity-node-graph{
   height: 700px;  
@@ -57,12 +49,10 @@ Elements
 }
 .patient-similarity-distribution-graph-1{
   height: 500px;
-  /* background-color: cadetblue; */
 }
 
 .patient-similarity-distribution-graph-2{
   height: 200px;
-  /* background-color: cyan; */
 }
 
 .patient-similarity-distribution-graph-2-body{
@@ -85,40 +75,11 @@ Elements
 /*
 Table overflow
 */
-.headcol {
-  /* position:absolute; 
-  width:6em; 
-  left:0;
-  top:auto;
-  border-right: 0px none black;  */
-  /*border-top-width:3px; /*only relevant for first row*/
-  /*margin-top:-3px;*/ /*compensate for top border*/
-}
-
-/* .headcol:before {
-  content: 'Row ';
-} */
-
-td, th {
-  /* margin:0; */
-  /* border:3px solid grey;  */
-  /* border-top-width:0px;  */
-  /* white-space:nowrap; */
-}
-
 .div-table { 
-  /* width: 100%;  */
-  /* overflow-x:scroll;   */
   margin-left:0.5em; 
   margin-right:0.5em; 
   margin-top: 0.5em;
-  /* overflow-y:visible; */
-  /* padding-bottom:-20px; */
-  /*  */
 }
-
-
-
 
 /*
 Custom toggle switch
@@ -226,10 +187,6 @@ Spinner Animation
   height: 100%;
   background-color: rgba(0,0,0,0.3);
 }
-
-
-
-
 .nucleobase {
   display: inline-block;
   position: relative;
@@ -587,39 +544,15 @@ Spinner Animation
   }
 }
 
-
-
-/* loader-h1 span {
-  position: relative;
-  display: inline-block;
-}
-loader-h1:after {
-  content: "2";
-  display: inline-block;
-  position: relative;
-  bottom: 1.4em;
-  left: 0.1em;
-  font-size: 4vh;
-  font-weight: 900;
-  letter-spacing: -1em;
-  opacity: 0;
-  -webkit-animation: superscript 1.6s cubic-bezier(0.25, 0, 0.2, 1) forwards;
-          animation: superscript 1.6s cubic-bezier(0.25, 0, 0.2, 1) forwards;
-  -webkit-animation-delay: 500ms;
-          animation-delay: 500ms;
-} */
-
 /*-------------------------
 	Inline help tip
 --------------------------*/
-
 
 .help-tip{
 	position: absolute;
 	top: 18px;
 	right: 18px;
 	text-align: center;
-  /* background-color: #BCDBEA; */
   background-color: #78D0FB;
 	border-radius: 50%;
 	width: 24px;
