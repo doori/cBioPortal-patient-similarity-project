@@ -1,5 +1,4 @@
 function doPopulateCancerNavigators(patientList) {
-    alert('still pending!');
 
     let panelBody = $("#patient-similarity-cancer-navigator-content");
     panelBody.empty();
@@ -11,7 +10,7 @@ function doPopulateCancerNavigators(patientList) {
         let div = $('<div>')
             .append(
                 '<button type="button" class="btn btn-toggle" data-toggle="button"' +
-                '    aria-pressed="false" autocomplete="off" onclick="doToggleClick(\'' + cancerType + '\')">' +
+                '    aria-pressed="false" autocomplete="off" onclick="doToggleClick(\'' + cancerType + '\', ' + i + ')">' +
                 '    <div class="handle"></div>' +
                 '</button>' +
                 '<div class="btn-toogle-label">' + cancerType + '</div>'
@@ -20,6 +19,6 @@ function doPopulateCancerNavigators(patientList) {
     })
 }
 
-function doToggleClick(cancerType) {
-    alert('...Trigger Event Pending... \nElement to Select on Graph: ' + cancerType)
+function doToggleClick(cancerType, optionIndex) {
+    d3.selectAll('.node').dispatch('customSelect', { detail: { cancerType: cancerType, optionIndex: optionIndex } });
 }

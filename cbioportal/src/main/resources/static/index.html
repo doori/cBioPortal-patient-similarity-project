@@ -50,13 +50,14 @@
                     <div class="form-group">
                         <input type="text" class="form-control hidden-component" placeholder="Patients Count"
                             id="patients-count"
-                            title="[Optional] The amount of patients returned for each source patient."
+                            title="[Optional] The number of patients to be shown that present similar conditions beyond patient zero."
                             data-toggle="tooltip" data-placement="bottom">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control hidden-component" placeholder="Graph Depth"
-                            id="patients-graph-depth" title="[Optional] The amount of layers per node (similarity jumps) the graph should go
-                            looking for similarities" data-toggle="tooltip" data-placement="bottom">
+                        <input type="text" class="form-control hidden-component" placeholder="Relational Depth"
+                            id="patients-graph-depth"
+                            title="[Optional] The degree of depth shown as similarities among patients with related conditions."
+                            data-toggle="tooltip" data-placement="bottom">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control hidden-component" required="true"
@@ -69,12 +70,10 @@
                 <div class="help-tip">
                     <p>
                         Data Provided by <a href="http://cbioportal.org/">cBioPortal</a> <br><br>
-                        <b>Patients Count:</b> [Optional] The amount of patients returned for each source patient.
-                        Default
-                        = 100 <br><br>
-                        <b>Graph Depth:</b> [Optional] The amount of layers per node (similarity jumps) the graph should
-                        go
-                        looking for similarities. Default = 0<br><br>
+                        <b>Patients Count:</b> [Optional] The number of patients to be shown that present similar
+                        conditions beyond patient zero.. Default = 100 <br><br>
+                        <b>Graph Depth:</b> [Optional] The degree of depth shown as similarities among patients with
+                        related conditions. Default = 0<br><br>
                         <b>Initial Patient:</b> [Required] The initial patient used as base to calculate the similarity
                         network.
                         <br><br><br>
@@ -210,7 +209,7 @@
 
     $(document).ready(() => {
         $('#patients-table').DataTable();
-        $('[data-toggle="tooltip"]').tooltip({ trigger: "hover", delay: { show: 1000, hide: 100 } })
+        $('[data-toggle="tooltip"]').tooltip({ trigger: "hover", delay: { show: 700, hide: 100 } })
     });
 
     $("form").submit(function (e) {
@@ -250,6 +249,7 @@
             const patientCancerDistributionGraph = getCancerDistributionGraph(patientId);
 
             Promise.all([patientGraphResult, patientCancerDistributionGraph]).then(() => {
+                patientList = getUniquePatientList();
                 $("#spinner-group").hide();
                 doDrawNodeGraph(patientId);
                 doPopulatePatientsTable(patientList);

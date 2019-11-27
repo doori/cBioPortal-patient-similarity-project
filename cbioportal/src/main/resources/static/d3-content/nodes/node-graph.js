@@ -70,6 +70,8 @@ async function recursiveGetPatientList(patientCount, depth, iteration, state, ne
 //TODO: COnfirm graph style before final version
 function doDrawNodeGraph(initialPatientId) {
     let nodes = {};
+    let fixedNodes = [];
+    let highlightedCancerTypes = [];
 
     // Compute the distinct nodes from the links.
     links.forEach(function (link) {
@@ -91,7 +93,7 @@ function doDrawNodeGraph(initialPatientId) {
         .attr("height", height)
         .attr("preserveAspectRatio", "xMinYMin meet")
 
-    let color = d3.scaleLinear().domain([6, 26]).range(["white", "blue"]);
+    let color = d3.scaleOrdinal(d3.schemeTableau10);    //d3.schemePaired
 
     let force = d3.forceSimulation()
         .nodes(d3.values(nodes))
@@ -101,7 +103,8 @@ function doDrawNodeGraph(initialPatientId) {
         .force("y", d3.forceY())
         .force("charge", d3.forceManyBody().strength(-100))
         .alphaTarget(0.25)
-        .on("tick", tick);
+        .on("tick", tick)
+
 
     // add the links and the arrows
     let path = svg.append("g")
@@ -128,19 +131,13 @@ function doDrawNodeGraph(initialPatientId) {
             if (d.name == initialPatientId) {
                 return 10;
             }
-            minRadius = 4;
+            minRadius = 6;
 
-            // let tempWeight = node.filter(function (l) {
-            //     return d.name == l.destination;
-            // }).size();
-
-            // d.weight = minRadius + (tempWeight * 2);
-            // return d.weight;
             return minRadius;
-        })
-        .style("fill", function (d) {
-            return color(d.weight);
         });
+    // .style("fill", function (d) {
+    //    return color(20);
+    // });
 
     // add the node labels
     node.append("text")
@@ -154,6 +151,7 @@ function doDrawNodeGraph(initialPatientId) {
     //this double click method is a little unreliable. Sometimes it will force the movement of the 
     //graph before recognizing the event. Slow double click should receive better responses
     node.on("click", function (d) {
+
         d.fixed = !d.fixed;
 
         if (d.fixed) {
@@ -167,10 +165,15 @@ function doDrawNodeGraph(initialPatientId) {
         }
     });
 
-    node.on("customSelect", function () {
-        d3.select(this).selectAll("circle").style("fill", "yellow"); 
-    });
+    node.on("customSelect", function (e) {
+        let customColor = d3.scaleSequential(d3.interpolatePiYG);
 
+        //pending color retrieval based on optionIndex or e.name
+        if (patientList.some(p => p.cancerType == d3.event.detail.cancerType && p.patientId == e.name)) {            
+            d3.select(this).selectAll("circle").style("fill", customColor(1 / (d3.event.detail.optionIndex * 200)));
+            console.log('index ' + d3.event.detail.optionIndex + ' = color ' + customColor(1 / (d3.event.detail.optionIndex * 200)));
+        }
+    });
 
 
 
@@ -222,6 +225,40 @@ function doDrawNodeGraph(initialPatientId) {
         }
 
     };
+}
+
+function getUniquePatientList() {
+    const uniquePatientList = [];
+    const map = new Map();
+    for (const patient of patientList) {
+        if (!map.has(patient.patientId)) {
+            map.set(patient.patientId, true);
+            uniquePatientList.push({
+                patientId: patient.patientId,
+                similarity: patient.similarity,
+                cancerType: patient.cancerType,
+                sex: patient.sex,
+                vitalStatus: patient.vitalStatus,
+                smokingHistory: patient.smokingHistory,
+                osMonths: patient.osMonths,
+                osStatus: patient.osStatus,
+                sampleCollectionSource: patient.sampleCollectionSource,
+                specimenPreservationType: patient.specimenPreservationType,
+                specimenType: patient.specimenType,
+                dnaInput: patient.dnaInput,
+                sampleCoverage: patient.sampleCoverage,
+                tumorPurity: patient.tumorPurity,
+                matchedStatus: patient.matchedStatus,
+                sampleType: patient.sampleType,
+                primarySite: patient.primarySite,
+                metastaticSite: patient.metastaticSite,
+                sampleClass: patient.sampleClass,
+                oncotreeCode: patient.oncotreeCode,
+                cancerTypeDetailed: patient.cancerTypeDetailed
+            });
+        }
+    }
+    return uniquePatientList;
 }
 
 

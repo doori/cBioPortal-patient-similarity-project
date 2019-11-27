@@ -2,7 +2,6 @@ function doPopulatePatientsTable(patientList) {
     let tableElem = $('#patients-table').DataTable();
     tableElem.clear();
 
-
     $.each(patientList, (i, patient) => {
         tableElem.row.add([
             patient.patientId,
