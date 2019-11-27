@@ -15,8 +15,8 @@ async function getPatientListInformation() {
     });
 }
 
-async function getPatientsSimilarityGraph(patientId, patientCount = 100, depth = 0) {
-    patientCount = patientCount == null || patientCount == "" ? 100 : patientCount;
+async function getPatientsSimilarityGraph(patientId, patientCount, depth = 0) {
+    patientCount = patientCount == null || patientCount == "" ? DEFAULT_MAX_PATIENT_COUNT : patientCount;
     depth = depth == null || depth == "" ? 0 : depth;
 
     let localList = [];

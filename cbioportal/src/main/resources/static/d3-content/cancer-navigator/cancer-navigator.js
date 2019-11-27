@@ -1,4 +1,4 @@
-function doPopulateCancerNavigators(patientList) {
+const doPopulateCancerNavigators = (patientList) => {
 
     let panelBody = $("#patient-similarity-cancer-navigator-content");
     panelBody.empty();
@@ -22,7 +22,7 @@ function doPopulateCancerNavigators(patientList) {
     })
 }
 
-function doToggleClick(e, cancerType, optionIndex) {
+const doToggleClick = (e, cancerType, optionIndex) => {
     let randomColor = getRandomColor();
     let isActivating = !$(e).hasClass("active");
 
@@ -40,13 +40,13 @@ function doToggleClick(e, cancerType, optionIndex) {
         });
 }
 
-function padZero(str, len) {
+const padZero = (str, len) => {
     len = len || 2;
     var zeros = new Array(len).join('0');
     return (zeros + str).slice(-len);
 }
 
-function getRandomColor() {
+const getRandomColor = () => {
     var color = Math.round(Math.random() * 0x1000000).toString(16);
     return "#" + padZero(color, 6);
 }

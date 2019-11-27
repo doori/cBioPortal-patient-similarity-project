@@ -1,4 +1,4 @@
-function doPopulatePatientsTable(patientList) {
+const doPopulatePatientsTable = (patientList) => {
     let tableElem = $('#patients-table').DataTable();
     tableElem.clear();
 

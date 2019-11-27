@@ -66,12 +66,20 @@
                         <input type="hidden" id="search-hidden-field">
                     </div>
                     <button type="submit" class="btn btn-default hidden-component" id="btn-do-search">Search</button>
+                    <div class="alert alert-warning alert-dismissible hidden-component" id="patient-count-warning">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+                            onclick="hideWarning()">&times;</a>
+                        <Strong>Please be aware:</Strong> Due to the nature of the similarity network, large counts of
+                        patients can result in extremely long processes delays or in a cluttered graph.<br>
+                        We suggest not going over 200 patients. The exponential formula to calculate the network
+                        is InitialPatient+(PatientsCount^RelationDepth)
+                    </div>
                 </form>
                 <div class="help-tip">
                     <p>
                         Data Provided by <a href="http://cbioportal.org/">cBioPortal</a> <br><br>
                         <b>Patients Count:</b> [Optional] The number of patients to be shown that present similar
-                        conditions beyond patient zero.. Default = 100 <br><br>
+                        conditions beyond patient zero.. Default = 35 <br><br>
                         <b>Graph Depth:</b> [Optional] The degree of depth shown as similarities among patients with
                         related conditions. Default = 0<br><br>
                         <b>Initial Patient:</b> [Required] The initial patient used as base to calculate the similarity
@@ -207,6 +215,11 @@
 
 
 <script>
+    const DEFAULT_MAX_PATIENT_COUNT = 35;
+    const DEFAULT_MAX_GRAPH_DEPTH = 0;
+    const MAX_SUGGESTED_NODES_TOTAL = 200;
+    let showWarning = true;
+
     let patientList = [];
 
     $(document).ready(() => {
@@ -214,9 +227,20 @@
         $('[data-toggle="tooltip"]').tooltip({ trigger: "hover", delay: { show: 700, hide: 100 } })
     });
 
-    $("form").submit(function (e) {
-        e.preventDefault();
+    $("form").submit((e) => { e.preventDefault(); });
+
+    $("#patients-count, #patients-graph-depth").on("keyup", () => {
+        let patientsCountVal = $("#patients-count").val() == "" ? DEFAULT_MAX_PATIENT_COUNT : $("#patients-count").val();
+        let patientsGraphDepthVal = $("#patients-graph-depth").val() == "" ? DEFAULT_MAX_GRAPH_DEPTH : $("#patients-graph-depth").val();
+
+        if (patientsCountVal > MAX_SUGGESTED_NODES_TOTAL || Math.pow(patientsCountVal, patientsGraphDepthVal) > MAX_SUGGESTED_NODES_TOTAL) {
+            $("#patient-count-warning").show();
+        } else {
+            $("#patient-count-warning").hide();
+        }
     });
+
+    const hideWarning = () => { showWarning = false; };
 
     getPatientListInformation().then((list) => {
         $("#spinner-group").hide();
@@ -231,7 +255,7 @@
         $('#btn-do-search').show();
         $('#search-field').show();
 
-        $("#btn-do-search").click(function () {
+        $("#btn-do-search").click(() => {
             patientList = [];
             patientCancerDistribution = [];
 
@@ -259,11 +283,8 @@
                 doPopulateCancerNavigators(patientList);
             });
 
-            if (patientCount == "") { $("#patients-count").val('100'); }
-            if (graphDepth == "") { $("#patients-graph-depth").val("0"); }
-
-            //TODO
-            //Set Support Graph A text dynamically to >> Distribution of Cancer Types: Top ' + cancerTypeElemLimit + ' Types + Aggregated Other
+            if (patientCount == "") { $("#patients-count").val(DEFAULT_MAX_PATIENT_COUNT); }
+            if (graphDepth == "") { $("#patients-graph-depth").val(DEFAULT_MAX_GRAPH_DEPTH); }
         });
     });
 
