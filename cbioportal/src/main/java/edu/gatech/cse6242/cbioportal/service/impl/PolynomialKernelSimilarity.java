@@ -1,14 +1,14 @@
 package edu.gatech.cse6242.cbioportal.service.impl;
 
 import net.sf.javaml.core.Instance;
+import net.sf.javaml.distance.AbstractSimilarity;
 import net.sf.javaml.distance.DistanceMeasure;
 
-public class PolynomialKernelSimilarity implements DistanceMeasure {
+public class PolynomialKernelSimilarity extends AbstractSimilarity {
 
     /**
      *
      */
-    private static final long serialVersionUID = 113839833688979121L;
     private double exponent=1;
 
     public PolynomialKernelSimilarity(double exponent){
@@ -36,22 +36,5 @@ public class PolynomialKernelSimilarity implements DistanceMeasure {
         }
         return result;
     }
-
-    public boolean compare(double x, double y) {
-        return (x < y);
-        //throw new UnsupportedOperationException("Not implemented");
-    }
-
-    @Override
-    public double getMinValue() {
-        return 0.0;
-        //throw new UnsupportedOperationException("Not implemented");
-    }
-    @Override
-    public double getMaxValue() {
-        return 1.0;
-        //throw new UnsupportedOperationException("Not implemented");
-    }
-
 
 }
