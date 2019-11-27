@@ -166,16 +166,14 @@ function doDrawNodeGraph(initialPatientId) {
     });
 
     node.on("customSelect", function (e) {
-        let customColor = d3.scaleSequential(d3.interpolatePiYG);
-
-        //pending color retrieval based on optionIndex or e.name
-        if (patientList.some(p => p.cancerType == d3.event.detail.cancerType && p.patientId == e.name)) {            
-            d3.select(this).selectAll("circle").style("fill", customColor(1 / (d3.event.detail.optionIndex * 200)));
-            console.log('index ' + d3.event.detail.optionIndex + ' = color ' + customColor(1 / (d3.event.detail.optionIndex * 200)));
+        if (patientList.some(p => p.cancerType == d3.event.detail.cancerType && p.patientId == e.name)) {
+            if (d3.event.detail.active) {
+                d3.select(this).selectAll("circle").style("fill", d3.event.detail.fillColor);
+            } else {
+                e.fixed ? d3.select(this).selectAll("circle").style("fill", "red") : d3.select(this).selectAll("circle").style("fill", null);
+            }
         }
     });
-
-
 
     // add the curvy lines
     function tick() {
@@ -260,6 +258,7 @@ function getUniquePatientList() {
     }
     return uniquePatientList;
 }
+
 
 
 
