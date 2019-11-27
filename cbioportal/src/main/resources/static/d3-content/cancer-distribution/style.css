@@ -1,0 +1,30 @@
+.bar{
+    fill: steelblue;
+}
+.bar:hover{
+    fill: brown;
+}
+.axis {
+    font: 11px sans-serif;
+}
+.axis path,
+.axis line{
+    fill:none;
+    stroke: #000;
+    shape-rendering:crispEdges;
+}
+.toolTip{
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+    font: 10px sans-serif;
+    border-radius: 5px;
+}
+.toolTip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}

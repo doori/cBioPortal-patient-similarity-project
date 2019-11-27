@@ -37,7 +37,15 @@ public class SimilarityServiceImpl implements SimilarityService {
 
     @Override
     public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
+        //TODO: remove this before merging
+        List<Long> ids = new ArrayList<Long>();
+        for (int i = 0; i < 40; i++) {
+            ids.add(Long.valueOf(i));
+        }        
+
+        return patientRepository.findAllById(ids);
+
+        //return patientRepository.findAll();
     }
 
     @Override
@@ -47,7 +55,7 @@ public class SimilarityServiceImpl implements SimilarityService {
 
     private List<PatientDTO> getSimilarPatients(String patientId, int limit, DistanceMeasure dm) throws IOException {
 
-        CustomDataset cnaData = DatasetUtil.loadCnaData();
+        CustomDataset cnaData = DatasetUtil.loadCnaDataWithoutZeros();
 
         Patient patient = patientRepository.findByPatientId(patientId);
         int id = patient.getId().intValue();
