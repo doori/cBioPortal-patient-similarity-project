@@ -2,21 +2,27 @@
 
 async function getCancerDistributionGraph(patientId) {
     let client = new Api();
-
     let result = await client.GetCancerTypePrediction(patientId);
-
-    patientCancerDistribution = result.data.classDistribution;
+    return result.data.classDistribution;
 }
 
-
-
-function doDrawCancerDistributionGraph(cancerDistributionRawData) {
+function doDrawCancerDistributionGraph(patientList) {
     const cancerTypeElemLimit = 10;
+
+    let cancerDistributionDataRaw = [];
+
+    patientList.map((patient) => {
+        if (cancerDistributionDataRaw[patient.cancerType]) {
+            cancerDistributionDataRaw[patient.cancerType] += 1;
+        } else {
+            cancerDistributionDataRaw[patient.cancerType] = 1;
+        }
+    })
 
     let cancerDistributionData = [];
 
-    Object.keys(cancerDistributionRawData).map((key) => {
-        var value = cancerDistributionRawData[key];
+    Object.keys(cancerDistributionDataRaw).map((key) => {
+        var value = cancerDistributionDataRaw[key];
         cancerDistributionData.push({ 'key': key, 'value': value });
     });
 
@@ -81,13 +87,14 @@ function doDrawCancerDistributionGraph(cancerDistributionRawData) {
         .attr("height", function (d) {
             return height - y(Number(d.value));
         })
-        .on("mousemove", function (d) {
+        .on("mouseover", function (d) {
             tooltip
-                .style("left", d3.event.pageX - 50 + "px")
-                .style("top", d3.event.pageY - 70 + "px")
+                .style("left", d3.event.pageX + 10 + "px")
+                .style("top", d3.event.pageY - 15 + "px")
                 .style("display", "inline-block")
                 .style("overflow", "visible")
-                .html((d.key) + "<br>" + ((d.value / 100) * 100).toFixed(2) + "%");
+                .style("position", "absolute")
+                .html((d.key) + "<br>" + "Count: " + d.value);
         })
         .on("mouseout", function (d) { tooltip.style("display", "none"); });
 
@@ -114,4 +121,5 @@ function doDrawCancerDistributionGraph(cancerDistributionRawData) {
             }
         });
     }
+
 }

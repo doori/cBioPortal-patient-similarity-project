@@ -6,18 +6,10 @@
 /*
 Boostrap overrides
 */
-.navbar-default {
+.no-margin-bottom{
   margin-bottom: 0px;
 }
 
-.panel {
-  margin-bottom: 0px;
-}
-
-/* .col-lg-4, .col-md-4 {
-  padding-left: 0;
-  padding-right: 0;
-} */
 .nopadding {
   padding: 0 !important;
   margin: 0 !important;
@@ -87,7 +79,7 @@ Elements
 }
 
 #patients-graph-depth{
-  width:110px;
+  width:130px;
 }
 
 /*
@@ -627,7 +619,8 @@ loader-h1:after {
 	top: 18px;
 	right: 18px;
 	text-align: center;
-	background-color: #BCDBEA;
+  /* background-color: #BCDBEA; */
+  background-color: #78D0FB;
 	border-radius: 50%;
 	width: 24px;
 	height: 24px;

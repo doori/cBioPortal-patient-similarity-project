@@ -14,11 +14,17 @@
     shape-rendering:crispEdges;
 }
 .toolTip{
-    position: absolute;
-    display: none;
-    height: auto;
-    background: none repeat scroll 0 0 #ffffff;
-    border: 1px solid #6F257F;
-    padding: 14px;
-    text-align: center;
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+    font: 10px sans-serif;
+    border-radius: 5px;
+}
+.toolTip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
 }

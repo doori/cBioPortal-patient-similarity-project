@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>cBioPortal - Patient Similarity</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default no-margin-bottom">
         <div class="container-fluid top-container-nav">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -103,12 +103,15 @@
 
     <div class="container justify-content-center customContainerWith">
         <div class="row">
-            <div class="" style="">
-                <div class="col-lg-8 col-md-12 patient-similarity-node-graph panel panel-default overflow-all"
+            <div class="">
+                <div class="alert alert-info no-margin-bottom" role="alert" id="patient-info">
+                    &nbsp;
+                </div>
+                <div class="col-lg-8 col-md-12 patient-similarity-node-graph panel panel-default overflow-all no-margin-bottom"
                     id="patient-similarity-node-graph">
                 </div>
                 <div class="col-lg-4 col-md-12 patient-similarity-node-graph nopadding">
-                    <div class="panel panel-default patient-similarity-distribution-graph-1">
+                    <div class="panel panel-default patient-similarity-distribution-graph-1 no-margin-bottom">
                         <div class="panel-heading bold">
                             Distribution of Cancer Types: Top 10 Types
                         </div>
@@ -118,7 +121,7 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default patient-similarity-distribution-graph-2">
+                    <div class="panel panel-default patient-similarity-distribution-graph-2 no-margin-bottom">
                         <div class="panel-heading bold">
                             Cancer Types
                         </div>
@@ -205,97 +208,16 @@
 <link rel="stylesheet" href="d3-content/nodes/style.css">
 
 <script src="d3-content/nodes/node-graph.js"></script>
-<script src="d3-content/patientTable/patientTable.js"></script>
+<script src="d3-content/patient-table/patient-table.js"></script>
 
 <link rel="stylesheet" href="d3-content/cancer-distribution/style.css">
 <script src="d3-content/cancer-distribution/cancer-graph.js"></script>
 
 <script src="d3-content/cancer-navigator/cancer-navigator.js"></script>
 
+<script src="d3-content/patient-info/patient-info.js"></script>
 
+<script src="main.js"></script>
 
-<script>
-    const DEFAULT_MAX_PATIENT_COUNT = 35;
-    const DEFAULT_MAX_GRAPH_DEPTH = 0;
-    const MAX_SUGGESTED_NODES_TOTAL = 200;
-    let showWarning = true;
-
-    let patientList = [];
-
-    $(document).ready(() => {
-        $('#patients-table').DataTable();
-        $('[data-toggle="tooltip"]').tooltip({ trigger: "hover", delay: { show: 700, hide: 100 } })
-    });
-
-    $("form").submit((e) => { e.preventDefault(); });
-
-    $("#patients-count, #patients-graph-depth").on("keyup", () => {
-        let patientsCountVal = $("#patients-count").val() == "" ? DEFAULT_MAX_PATIENT_COUNT : $("#patients-count").val();
-        let patientsGraphDepthVal = $("#patients-graph-depth").val() == "" ? DEFAULT_MAX_GRAPH_DEPTH : $("#patients-graph-depth").val();
-
-        if (patientsCountVal > MAX_SUGGESTED_NODES_TOTAL || Math.pow(patientsCountVal, patientsGraphDepthVal) > MAX_SUGGESTED_NODES_TOTAL) {
-            $("#patient-count-warning").show();
-        } else {
-            $("#patient-count-warning").hide();
-        }
-    });
-
-    const hideWarning = () => { showWarning = false; };
-
-    getPatientListInformation().then((list) => {
-        $("#spinner-group").hide();
-
-        $('#search-field').autocomplete({
-            nameProperty: 'value',
-            valueProperty: 'patientId',
-            valueField: '#search-hidden-field',
-            dataSource: list
-        });
-
-        $('#btn-do-search').show();
-        $('#search-field').show();
-
-        $("#btn-do-search").click(() => {
-            patientList = [];
-            patientCancerDistribution = [];
-
-            let patientId = $("#search-hidden-field").val();
-            let patientCount = $("#patients-count").val();
-            let graphDepth = $("#patients-graph-depth").val();
-
-            if (patientId == "") { return; }
-
-            $("#patient-similarity-node-graph").empty();
-            $("#patient-similarity-cancer-distribution").empty();
-
-            $("#spinner-group").show();
-
-            const patientGraphResult = getPatientsSimilarityGraph(patientId, patientCount == "" ? null : patientCount, graphDepth == "" ? null : graphDepth);
-
-            const patientCancerDistributionGraph = getCancerDistributionGraph(patientId);
-
-            Promise.all([patientGraphResult, patientCancerDistributionGraph]).then(() => {
-                patientList = getUniquePatientList();
-                $("#spinner-group").hide();
-                doDrawNodeGraph(patientId);
-                doPopulatePatientsTable(patientList);
-                doDrawCancerDistributionGraph(patientCancerDistribution);
-                doPopulateCancerNavigators(patientList);
-            });
-
-            if (patientCount == "") { $("#patients-count").val(DEFAULT_MAX_PATIENT_COUNT); }
-            if (graphDepth == "") { $("#patients-graph-depth").val(DEFAULT_MAX_GRAPH_DEPTH); }
-        });
-    });
-
-
-
-
-
-
-
-
-
-</script>
 
 </html>

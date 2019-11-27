@@ -1,6 +1,6 @@
 
 // get the data
-let links = [];
+// let links = [];
 
 async function getPatientListInformation() {
     let client = new Api();
@@ -15,13 +15,15 @@ async function getPatientListInformation() {
     });
 }
 
-async function getPatientsSimilarityGraph(patientId, patientCount, depth = 0) {
+async function getPatientsSimilarityAggregatedGraphContent(patientId, patientCount, depth = 0) {
     patientCount = patientCount == null || patientCount == "" ? DEFAULT_MAX_PATIENT_COUNT : patientCount;
     depth = depth == null || depth == "" ? 0 : depth;
 
     let localList = [];
 
     let client = new Api();
+
+    let patientList = [];
 
     let response = await client.GetSimilarPatients(patientId, patientCount);
 
@@ -35,11 +37,13 @@ async function getPatientsSimilarityGraph(patientId, patientCount, depth = 0) {
         });
     });
 
-    links = await recursiveGetPatientList(patientCount, depth, 0, [], localList); //depth - 1 is actual depth
+    let links = await recursiveGetPatientList(patientCount, depth, 0, [], localList, patientList); //depth - 1 is actual depth
+
+    return [links, patientList];
 }
 
-async function recursiveGetPatientList(patientCount, depth, iteration, state, next) {
-    let localPatientList = [];
+async function recursiveGetPatientList(patientCount, depth, iteration, state, next, patientList) {
+    let localLinks = [];
 
     if (depth == iteration) {
         return new Promise((resolve, reject) => { resolve([...state, ...next]); });
@@ -55,7 +59,7 @@ async function recursiveGetPatientList(patientCount, depth, iteration, state, ne
             content.data.map((patient) => {
                 patientList.push(patient);
 
-                localPatientList.push({
+                localLinks.push({
                     source: content.config.params.id,
                     target: patient.patientId,
                     value: patient.similarity * 10
@@ -63,15 +67,13 @@ async function recursiveGetPatientList(patientCount, depth, iteration, state, ne
             });
         });
 
-        return await recursiveGetPatientList(patientCount, depth, iteration + 1, [...state, ...next], localPatientList);
+        return await recursiveGetPatientList(patientCount, depth, iteration + 1, [...state, ...next], localLinks, patientList);
     }
 }
 
 //TODO: COnfirm graph style before final version
-function doDrawNodeGraph(initialPatientId) {
+function doDrawNodeGraph(initialPatientId, links) {
     let nodes = {};
-    let fixedNodes = [];
-    let highlightedCancerTypes = [];
 
     // Compute the distinct nodes from the links.
     links.forEach(function (link) {
@@ -155,7 +157,7 @@ function doDrawNodeGraph(initialPatientId) {
         d.fixed = !d.fixed;
 
         if (d.fixed) {
-            d3.select(this).selectAll("circle").style("fill", "red");
+            d3.select(this).selectAll("circle").style("fill", "black");
             d.fx = d.x;
             d.fy = d.y;
         } else {
@@ -166,11 +168,11 @@ function doDrawNodeGraph(initialPatientId) {
     });
 
     node.on("customSelect", function (e) {
-        if (patientList.some(p => p.cancerType == d3.event.detail.cancerType && p.patientId == e.name)) {
+        if (g_PatientList.some(p => p.cancerType == d3.event.detail.cancerType && p.patientId == e.name)) {
             if (d3.event.detail.active) {
                 d3.select(this).selectAll("circle").style("fill", d3.event.detail.fillColor);
             } else {
-                e.fixed ? d3.select(this).selectAll("circle").style("fill", "red") : d3.select(this).selectAll("circle").style("fill", null);
+                e.fixed ? d3.select(this).selectAll("circle").style("fill", "black") : d3.select(this).selectAll("circle").style("fill", null);
             }
         }
     });
@@ -225,7 +227,7 @@ function doDrawNodeGraph(initialPatientId) {
     };
 }
 
-function getUniquePatientList() {
+function getUniquePatientList(patientList) {
     const uniquePatientList = [];
     const map = new Map();
     for (const patient of patientList) {
