@@ -1,87 +1,89 @@
-![](https://frontend.cbioportal.org/reactapp/images/369b022222badf37b2b0c284f4ae2284.png)
+# Patient Similarity Application
 
+CSE6242 cBioPortal Patient Similarity Prototype by Team 15 (Daniel Felipe, Isaac Kaufman, Doori Rose)
 
-# Coding Guidelines
+## Set up
 
+### Prerequisites
+* [Java 8](https://www.java.com/en/download/help/download_options.xml)
+* [Maven](https://maven.apache.org/install.html)
+* IDE like [Eclipse](https://www.eclipse.org/downloads) or [IntellJ Community](https://www.jetbrains.com/idea/download)
+ 
+### Build and Run Application
 
-**Table of Contents**
+You have can build and run the application through the command line or your IDE.
 
-- Coding Guidelines
-    + [Source Control](#source-control)
-    + [Languages](#languages)
-    + [Code](#code)
-    + [Hosting Environment](#hosting-environment)
-    + [Teamwork](#teamwork)
-    + [Useful Links](#useful-links)
-
-------
-
-### Source Control
-- Do **not** commit directly into **master**! (See [Git Feature Branch Workflow](https://patientsimilarity.atlassian.net/ "Git Feature Branch Workflow"))
-- Branch your features, then
-- Create Pull Requests (PR) when merging into Master
-- Do not approve your own PR unless it's a break-the-glass issue
-  - If it's an exception, explain why on the comments
-- Let a team lead take a look (even if it's a quick review) at your code.
-    - Team Leads so far are Daniel (front-end) and Doori (back-end)
-- Commits' comments are important. Yes, somebody reads them :)
-
-### Languages
-- Backend: Java, Maven framework, etc.
-- Front-end: plain JavaScript, any library as needed
-- DB: MySQL, any other option if needed
-> * We are not using Typescript right now because:
->   * Real-time transpiling can be slow
->   * Not sure about d3 and typescript support into the wild
->   * We could use a framework (react?) but would require some building process
->   * TS has its own learning curve
-
-### Code
-- Code cleaning is **important**
-- Naming conventions are **importantes** too :)
-- Refactoring as a whole is only important once we have a good Proof of concept (POC)
-- We will work in multiple js files, referenced from index.html. After the initial POC we will start consolidating.
-
-### Hosting Environment
-- Locally for dev. Once closer to a stable point, we can use a VM or similar.
-- No CI/CD for now. We can work on this later.
-
-### Teamwork
-- Alexander, Isaac, Daniel - Front-End
-- Shan, Doori - Back-End
-- We will be using Jira as our task dashboard. 
-  - See [Jira/Attlassian Dashboard](https://patientsimilarity.atlassian.net/ "Jira/Attlassian Dashboard")
-- We will do agile/scrum meeting (~20 min) where we share:
-  1) what we did
-  2) what we will do
-  3) any blockers.
-  4) Any questions about requirements or get feedback on your design ideas etc.
-  
-### Useful Links  
-[Project Document](https://docs.google.com/document/d/e/2PACX-1vTdnDpz5UBOF3aPxucO77hl-i7FJagqulRgLS_4y9xcXkWReaoxbfhKtxQ6VZ55wpFysT30mTpPlGNq/pub#h.z11rqsgxo2dh "Project Document") 
+Before build, please run below to install the 3rd party jars.
 ```
-https://docs.google.com/document/d/e/2PACX-1vTdnDpz5UBOF3aPxucO77hl-i7FJagqulRgLS_4y9xcXkWReaoxbfhKtxQ6VZ55wpFysT30mTpPlGNq/pub#h.z11rqsgxo2dh
+mvn install:install-file -Dfile=<path-to-cbioportal-folder>/dependency/javaml-0.1.7.jar -DgroupId=net.sourceforge \
+       -DartifactId=javaml -Dversion=0.1.7 -Dpackaging=jar
 ```
-[cBioPortal](https://www.cbioportal.org/ "cBioPortal") 
 ```
-https://www.cbioportal.org/
-```
-[cBioPortal Repository](https://github.com/cBioPortal/cbioportal "cBioPortal Repository") 
-```
-https://www.cbioportal.org/
-```
-[Team Project Folder](https://drive.google.com/drive/folders/1Vdx99oZNMeFL_ZwkGf-kCJbeqxhlflYG?usp=sharing "Team Folder") 
-```
-https://drive.google.com/drive/folders/1Vdx99oZNMeFL_ZwkGf-kCJbeqxhlflYG?usp=sharing
-```
-[Jira/Attlassian Dashboard](https://patientsimilarity.atlassian.net/ "Jira/Attlassian Dashboard")
-```
-https://patientsimilarity.atlassian.net/
+mvn install:install-file -Dfile=<path-to-cbioportal-folder>/dependency/ajt-2.9.jar -DgroupId=be.abeel \
+       -DartifactId=ajt -Dversion=2.9 -Dpackaging=jar
 ```
 
-[Git Feature Branch Workflow](https://patientsimilarity.atlassian.net/ "Git Feature Branch Workflow")
+**1. via Command line**  
+In cbioportal/ directory run below commands.  
+If you're using Mac or Linux in cbioportal/ directory run  
 ```
-https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
+./mvnw clean install -DskipTests && java -jar target/cbioportal-0.0.1-SNAPSHOT.jar
 ```
-    
-    
+If you're using Windows, use the cmd maven wrapper.
+```
+./mvnw.cmd clean install -DskipTests && java -jar target/cbioportal-0.0.1-SNAPSHOT.jar
+```
+*Note: If you have mvn in your $PATH, you can directly use mvn instead of the wrapper (mvnw).
+You will need to add java to your $PATH, if not already added.*
+
+![command line build run](readme_img/cl_build_run.png)
+
+**2. via IDE (Intellij)**
+
+ - Build the project with maven 1) clean then 2) install.
+ - Once the build is successful, run the application by right clicking CbioportalApplication.java -> Run
+
+![intellij build run](readme_img/intellij_build_run.png)
+
+
+## Application
+
+Once your application is running, go to http://localhost:8080/   
+
+![UI](readme_img/UI.png)
+
+## H2 Database
+
+For this Proof of Concept, we use an in-memory H2 Database that is brought up when the application starts. To access this database, go to http://localhost:8080/h2-console
+and connect with the default settings.
+
+![h2db](readme_img/h2db.png)
+
+## Data preprocessing
+
+Change directory to `src/main/resources/scripts` folder.
+To run data preprocessing scripts, first install required python libraries by running:
+```
+pip install -r requirements.txt
+```
+
+Then run the script, that will output a file in `data/` folder.
+Please check parameter details with `python data_preprocessing.py -h`
+```
+python data_preprocessing.py
+```
+
+## Experiment graphs
+
+Change directory to `src/main/resources/scripts` folder.
+To generate expeirment graphs, first install required python libraries by running:
+```
+pip install -r requirements.txt
+```
+
+Then run the script, that will save a png file in the current folder.
+An example command is as below. Please check the python file for more options.
+```
+python experiment_graphs.py knn
+```
+
