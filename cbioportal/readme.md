@@ -1,6 +1,6 @@
 # Patient Similarity Application
 
-CSE6242 cBioPortal Patient Similarity Prototype by Team 15
+CSE6242 cBioPortal Patient Similarity Prototype by Team 15 (Daniel Felipe, Isaac Kaufman, Doori Rose)
 
 ## Set up
 
@@ -20,7 +20,7 @@ mvn install:install-file -Dfile=<path-to-cbioportal-folder>/dependency/javaml-0.
 ```
 ```
 mvn install:install-file -Dfile=<path-to-cbioportal-folder>/dependency/ajt-2.9.jar -DgroupId=be.abeel \
-       -DartifactId=javaml -Dversion=2.9 -Dpackaging=jar
+       -DartifactId=ajt -Dversion=2.9 -Dpackaging=jar
 ```
 
 **1. via Command line**  
@@ -49,9 +49,8 @@ You will need to add java to your $PATH, if not already added.*
 ## Application
 
 Once your application is running, go to http://localhost:8080/   
-You will see something like the screenshot below. Clicking on say hello, makes an api call and populates the div above with "hello world".
 
-![hello world](readme_img/hello_world.png)
+![UI](readme_img/UI.png)
 
 ## H2 Database
 
